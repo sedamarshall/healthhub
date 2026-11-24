@@ -13,6 +13,8 @@ if [ -f prisma/healthhub.db ]; then
   ls -1t backups/healthhub-*.db | tail -n +15 | xargs -r rm -f   # keep the last 14
 fi
 
+# aaPanel hands the folder to the "www" user; let root still run git here.
+git config --global --get-all safe.directory | grep -qx "$PWD" || git config --global --add safe.directory "$PWD"
 git pull --ff-only
 npm ci --no-audit --no-fund
 npx prisma generate
