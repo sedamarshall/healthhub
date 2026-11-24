@@ -1,5 +1,6 @@
 // Sellzy-style admin building blocks (server-safe; interactive bits live in kit-client.tsx)
 import Link from "next/link";
+import { tileStyle } from "@/lib/tile";
 import { IArrowLeft, IBan, ICalendar, ICheck, IEye, IPencil, ISearch, ITrash, IX } from "./icons";
 import { AutoSubmitSelect } from "./kit-client";
 
@@ -128,11 +129,11 @@ export function ThumbCell({ src, title, sub, href, round = false }: { src?: stri
 /** Pastel tile with white circular icon (Orders / Coupons / Stock pages). */
 export function Tile({ label, value, bg, icon }: { label: string; value: string | number; bg: string; icon: React.ReactNode }) {
   return (
-    <div className="tile-tint flex items-center gap-4 rounded-2xl p-5" style={{ background: bg }}>
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#212529]">{icon}</span>
+    <div className="tile-tint flex items-center gap-4 rounded-2xl p-5" style={tileStyle(bg)}>
+      <span className="tile-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#212529]">{icon}</span>
       <div className="min-w-0">
-        <p className="truncate text-sm font-semibold text-[#495057]">{label}</p>
-        <p className="font-num text-2xl font-bold text-[#212529]">{typeof value === "number" ? value.toLocaleString() : value}</p>
+        <p className="tile-label truncate text-sm font-semibold text-[#495057]">{label}</p>
+        <p className="tile-value font-num text-2xl font-bold text-[#212529]">{typeof value === "number" ? value.toLocaleString() : value}</p>
       </div>
     </div>
   );

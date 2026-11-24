@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { requireStaff } from "@/lib/auth";
+import { tileStyle } from "@/lib/tile";
 import { kes } from "@/lib/utils";
 import { Check, DataTable, ExportLink, IconLink, ModuleHeader, ThumbCell, Toolbar } from "../../ui/kit";
 import { AdminPagination } from "../../ui/widgets";
@@ -52,9 +53,9 @@ export default async function TopProducts({ searchParams }: { searchParams: Prom
       {topCats.length > 0 && (
         <div className="mb-6 grid gap-3 sm:grid-cols-3 xl:grid-cols-6">
           {topCats.map(([name, total], i) => (
-            <div key={name} className="tile-tint rounded-2xl p-4" style={{ background: ["rgba(160,226,224,0.6)", "rgba(255,235,105,0.6)", "rgba(255,192,145,0.6)", "rgba(255,214,239,0.6)", "rgba(146,189,245,0.6)", "rgba(158,232,114,0.6)"][i] }}>
-              <p className="truncate text-sm font-semibold text-[#495057]">#{i + 1} {name}</p>
-              <p className="font-num text-lg font-bold">{kes(total)}</p>
+            <div key={name} className="tile-tint rounded-2xl p-4" style={tileStyle(["rgba(160,226,224,0.6)", "rgba(255,235,105,0.6)", "rgba(255,192,145,0.6)", "rgba(255,214,239,0.6)", "rgba(146,189,245,0.6)", "rgba(158,232,114,0.6)"][i])}>
+              <p className="tile-label truncate text-sm font-semibold text-[#495057]">#{i + 1} {name}</p>
+              <p className="tile-value font-num text-lg font-bold">{kes(total)}</p>
             </div>
           ))}
         </div>

@@ -65,8 +65,21 @@
 /* ---- logos: purple artwork needs a light chip on dark backgrounds ---- */
 .dark .logo-chip { background: #fff; border-radius: 12px; padding: 4px 10px; }
 
-/* ---- pastel stat tiles (inline backgrounds): dim them so light text reads well ---- */
-.dark .tile-tint { background-image: linear-gradient(rgb(20 17 26 / 0.74), rgb(20 17 26 / 0.74)); }
+/* ---- pastel stat tiles ----
+ * Light mode: the pastel inline background. Dark mode: a dark card tinted with the tile's colour (--tile,
+ * set by tileStyle()), a matching hairline border, white figures, and the colour reused for the icon and % pill.
+ * !important is needed to beat the inline `background`. */
+.dark .tile-tint {
+  --tile: rgb(161 15 228);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--tile) 24%, var(--surface)) 0%, color-mix(in srgb, var(--tile) 9%, var(--surface)) 100%) !important;
+  border: 1px solid color-mix(in srgb, var(--tile) 32%, transparent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+.dark .tile-tint .tile-label { color: var(--text-2); }
+.dark .tile-tint .tile-value { color: #fff; }
+.dark .tile-tint .tile-icon { background: color-mix(in srgb, var(--tile) 22%, transparent); color: var(--tile); }
+.dark .tile-tint .tile-pill { background: color-mix(in srgb, var(--tile) 18%, transparent); color: var(--tile); }
+.dark .tile-tint .tile-pill-down { background: rgb(255 86 48 / 0.16); color: #ff8f73; }
 .dark .tile-tint .bg-white { background-color: rgb(255 255 255 / 0.1); }
 
 /* ---- selects drawn with a dark chevron image ---- */
@@ -109,3 +122,8 @@
 .dark .\!text-\[\#a10fe4\] { color: var(--purple-text) !important; }
 .dark .\!bg-white:not(.keep-white) { background-color: var(--surface) !important; }
 .dark .\!bg-\[\#f9fafb\], .dark .\!bg-\[\#f4f6f8\] { background-color: var(--surface-2) !important; }
+
+/* Promo banners: product photos are multiplied into the pastel in light mode; on a dark card that turns them murky,
+ * so in dark mode show the photo as-is on a small white card. */
+.dark .tile-tint .tile-photo { background: #fff; border-radius: 16px; padding: 8px; }
+.dark .tile-tint .tile-photo img { mix-blend-mode: normal; inset: 8px !important; width: calc(100% - 16px) !important; height: calc(100% - 16px) !important; }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { tileStyle } from "@/lib/tile";
 import { prisma } from "@/lib/db";
 import { unstable_cache } from "next/cache";
 import { cardInclude, getNav, reviveProducts, TAGS, visible } from "@/lib/catalog";
@@ -158,14 +159,14 @@ export default async function Home() {
 
       <section className="container-x grid gap-6 py-8 md:grid-cols-3">
         {banners.map((b) => (
-          <Link key={b.title} href={b.href} className="tile-tint group relative flex min-h-[220px] items-center overflow-hidden rounded-3xl p-7" style={{ background: b.bg }}>
+          <Link key={b.title} href={b.href} className="tile-tint group relative flex min-h-[220px] items-center overflow-hidden rounded-3xl p-7" style={tileStyle(b.bg)}>
             <div className="relative z-10 max-w-[55%]">
               <h4 className="font-heading text-2xl font-bold leading-tight">{b.title}</h4>
               <p className="mt-2 text-muted">{b.text}</p>
               <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white group-hover:bg-brand-700">{b.cta}</span>
             </div>
             {b.image && (
-              <div className="absolute bottom-4 right-4 top-4 w-[42%]">
+              <div className="tile-photo absolute bottom-4 right-4 top-4 w-[42%]">
                 <Image src={b.image} alt="" fill sizes="200px" className="object-contain mix-blend-multiply" />
               </div>
             )}

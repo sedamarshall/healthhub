@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { tileStyle } from "@/lib/tile";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
@@ -172,13 +173,13 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               </div>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 {([
-                  ["Orders", String(orders.length), "bg-[rgba(239,214,252,0.8)]", href("orders")],
-                  ["In progress", String(open), "bg-[rgba(255,235,105,0.6)]", "/account?tab=orders&f=open"],
-                  ["Total spent", kes(spent), "bg-[rgba(160,226,224,0.6)]", href("orders")],
+                  ["Orders", String(orders.length), "rgba(239,214,252,0.8)", href("orders")],
+                  ["In progress", String(open), "rgba(255,235,105,0.6)", "/account?tab=orders&f=open"],
+                  ["Total spent", kes(spent), "rgba(160,226,224,0.6)", href("orders")],
                 ] as const).map(([l, v, bg, to]) => (
-                  <Link key={l} href={to} className={`tile-tint rounded-2xl p-3 transition hover:-translate-y-0.5 sm:p-6 ${bg}`}>
-                    <p className="text-xs font-semibold text-muted sm:text-sm">{l}</p>
-                    <p className="mt-1 truncate font-heading text-base font-bold sm:text-2xl">{v}</p>
+                  <Link key={l} href={to} className="tile-tint rounded-2xl p-3 transition hover:-translate-y-0.5 sm:p-6" style={tileStyle(bg)}>
+                    <p className="tile-label text-xs font-semibold text-muted sm:text-sm">{l}</p>
+                    <p className="tile-value mt-1 truncate font-heading text-base font-bold sm:text-2xl">{v}</p>
                   </Link>
                 ))}
               </div>

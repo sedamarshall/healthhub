@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { tileStyle } from "@/lib/tile";
 import { ITrendDown, ITrendUp, IChevronLeft, IChevronRight } from "./icons";
 
 // ---------- Stat card ----------
@@ -6,17 +7,17 @@ export function StatCard({ label, value, change, bg, href }: { label: string; va
   const up = (change ?? 0) >= 0;
   const Box = ({ children }: { children: React.ReactNode }) =>
     href ? (
-      <Link href={href} className="tile-tint block rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(145,158,171,0.24)] focus-visible:outline-2 focus-visible:outline-[#a10fe4]" style={{ background: bg }} aria-label={`${label}: ${value}`}>{children}</Link>
+      <Link href={href} className="tile-tint block rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(145,158,171,0.24)] focus-visible:outline-2 focus-visible:outline-[#a10fe4]" style={tileStyle(bg)} aria-label={`${label}: ${value}`}>{children}</Link>
     ) : (
-      <div className="tile-tint rounded-2xl p-6" style={{ background: bg }}>{children}</div>
+      <div className="tile-tint rounded-2xl p-6" style={tileStyle(bg)}>{children}</div>
     );
   return (
     <Box>
-      <p className="text-sm font-semibold text-[#495057]">{label}</p>
+      <p className="tile-label text-sm font-semibold text-[#495057]">{label}</p>
       <div className="mt-1 flex items-end justify-between gap-2">
-        <p className="font-num text-2xl font-bold text-[#212529]">{value}</p>
+        <p className="tile-value font-num text-2xl font-bold text-[#212529]">{value}</p>
         {change !== undefined && change !== null && (
-          <span className={`inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs font-semibold ${up ? "text-[#a10fe4]" : "text-[#cb0233]"}`}>
+          <span className={`tile-pill inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs font-semibold ${up ? "text-[#a10fe4]" : "tile-pill-down text-[#cb0233]"}`}>
             {up ? "+" : ""}
             {change.toFixed(1)}%{up ? <ITrendUp /> : <ITrendDown />}
           </span>
