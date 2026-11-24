@@ -16,6 +16,9 @@ fi
 # aaPanel hands the folder to the "www" user; let root still run git here.
 git config --global --get-all safe.directory | grep -qx "$PWD" || git config --global --add safe.directory "$PWD"
 git pull --ff-only
+# aaPanel's own installer can remove or rewrite the npm lock file; put ours back.
+git checkout -- package-lock.json
+rm -f yarn.lock
 npm ci --no-audit --no-fund
 npx prisma generate
 npx prisma db push --skip-generate   # adds new tables/columns; never drops data without asking
