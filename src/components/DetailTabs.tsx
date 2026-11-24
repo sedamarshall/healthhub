@@ -1,23 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Pill tabs + bordered panel with grey title bar (reference product-details tabs). */
 export function DetailTabs({ tabs, panels }: { tabs: string[]; panels: React.ReactNode[] }) {
   const [active, setActive] = useState(0);
-  // Deep links like #reviews open the matching tab
+  const box = useRef<HTMLDivElement>(null);
+  // Deep links like #reviews open the matching tab, then scroll to it (the panel was hidden, so the browser couldn't).
   useEffect(() => {
     const sync = () => {
       const i = tabs.findIndex((t) => `#${t.toLowerCase().replace(/\s+/g, "-")}` === window.location.hash);
-      if (i >= 0) setActive(i);
+      if (i < 0) return;
+      setActive(i);
+      requestAnimationFrame(() => box.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    };
+    // Clicking the same "#reviews" link again doesn't change the hash, so catch the click too.
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest?.('a[href^="#"]');
+      if (a && a.getAttribute("href") === window.location.hash) setTimeout(sync);
     };
     sync();
     window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
+    document.addEventListener("click", onClick);
+    return () => { window.removeEventListener("hashchange", sync); document.removeEventListener("click", onClick); };
   }, [tabs]);
 
   return (
-    <div>
+    <div ref={box} className="scroll-mt-24">
       <ul className="scrollbar-none mb-6 flex gap-4 overflow-x-auto" role="tablist">
         {tabs.map((t, i) => (
           <li key={t}>
