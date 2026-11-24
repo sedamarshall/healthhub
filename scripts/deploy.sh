@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Update the live site: pull the latest code, install, update the database tables, build, restart.
-# Run on the server from the project folder:  bash scripts/deploy.sh
+# Build (or update) the site on the server. Then restart "healthhub" in aaPanel → Website → Node.js Project.
+# Run from the project folder:  bash scripts/deploy.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -20,10 +20,8 @@ npx prisma db push --skip-generate   # adds new tables/columns; never drops data
 mkdir -p storage/uploads storage/prescriptions
 npm run build
 
-if pm2 describe healthhub >/dev/null 2>&1; then
-  pm2 reload healthhub --update-env
-else
-  pm2 start ecosystem.config.cjs
-  pm2 save
-fi
-echo "Deployed. Check: pm2 logs healthhub --lines 50"
+# aaPanel runs Node projects as the "www" user: it must be able to write the database and uploads.
+if id www >/dev/null 2>&1; then chown -R www:www prisma storage backups .next; fi
+
+echo
+echo "Build done. Now restart the project: aaPanel → Website → Node.js Project → healthhub → Restart."

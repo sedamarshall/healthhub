@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "start:server": "next start -p 3010 -H 127.0.0.1",
     "db:push": "prisma db push",
     "db:import": "tsx scripts/import-catalog.ts",
     "db:seed-admin": "tsx scripts/create-admin.ts"
