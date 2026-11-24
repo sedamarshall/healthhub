@@ -1,0 +1,184 @@
+﻿category_id,path,name,parent_id,level,full_path,product_count,old_url
+1,1,Analgesics/Pain Reliever,,1,Analgesics/Pain Reliever,139,https://healthhub.ke/index.php?route=product/category&path=1
+3,1_3,Oral Pain Relievers,1,2,Analgesics/Pain Reliever > Oral Pain Relievers,59,https://healthhub.ke/index.php?route=product/category&path=1_3
+4,1_4,Topical Pain Relievers,1,2,Analgesics/Pain Reliever > Topical Pain Relievers,36,https://healthhub.ke/index.php?route=product/category&path=1_4
+2,2,Dental,,1,Dental,142,https://healthhub.ke/index.php?route=product/category&path=2
+5,2_5,Tooth Brushes,2,2,Dental > Tooth Brushes,14,https://healthhub.ke/index.php?route=product/category&path=2_5
+6,2_6,Tongue Cleaner,2,2,Dental > Tongue Cleaner,2,https://healthhub.ke/index.php?route=product/category&path=2_6
+7,2_7,Dental Floss,2,2,Dental > Dental Floss,12,https://healthhub.ke/index.php?route=product/category&path=2_7
+8,2_8,Breath Fresheners,2,2,Dental > Breath Fresheners,5,https://healthhub.ke/index.php?route=product/category&path=2_8
+9,2_9,Tape,2,2,Dental > Tape,1,https://healthhub.ke/index.php?route=product/category&path=2_9
+10,2_10,Tooth Paste,2,2,Dental > Tooth Paste,45,https://healthhub.ke/index.php?route=product/category&path=2_10
+11,2_11,Denture Adhesive Cream,2,2,Dental > Denture Adhesive Cream,9,https://healthhub.ke/index.php?route=product/category&path=2_11
+12,2_12,Mouth Wash,2,2,Dental > Mouth Wash,41,https://healthhub.ke/index.php?route=product/category&path=2_12
+13,2_13,Teething Powder & Gel,2,2,Dental > Teething Powder & Gel,5,https://healthhub.ke/index.php?route=product/category&path=2_13
+14,2_14,Adult Mouth Gel,2,2,Dental > Adult Mouth Gel,5,https://healthhub.ke/index.php?route=product/category&path=2_14
+15,15,Baby & Mum,,1,Baby & Mum,223,https://healthhub.ke/index.php?route=product/category&path=15
+16,15_16,Baby,15,2,Baby & Mum > Baby,155,https://healthhub.ke/index.php?route=product/category&path=15_16
+17,15_16_17,Soap,16,3,Baby & Mum > Baby > Soap,23,https://healthhub.ke/index.php?route=product/category&path=15_16_17
+18,15_16_18,Nappy Rash,16,3,Baby & Mum > Baby > Nappy Rash,14,https://healthhub.ke/index.php?route=product/category&path=15_16_18
+19,15_16_19,Formulas,16,3,Baby & Mum > Baby > Formulas,25,https://healthhub.ke/index.php?route=product/category&path=15_16_19
+20,15_16_20,Diapers and Hygiene,16,3,Baby & Mum > Baby > Diapers and Hygiene,15,https://healthhub.ke/index.php?route=product/category&path=15_16_20
+21,15_16_21,Wipes,16,3,Baby & Mum > Baby > Wipes,4,https://healthhub.ke/index.php?route=product/category&path=15_16_21
+22,15_16_22,Band Aid,16,3,Baby & Mum > Baby > Band Aid,5,https://healthhub.ke/index.php?route=product/category&path=15_16_22
+23,15_16_23,Skincare,16,3,Baby & Mum > Baby > Skincare,63,https://healthhub.ke/index.php?route=product/category&path=15_16_23
+24,15_16_23_24,Cream,23,4,Baby & Mum > Baby > Skincare > Cream,20,https://healthhub.ke/index.php?route=product/category&path=15_16_23_24
+25,15_16_23_25,Lotion,23,4,Baby & Mum > Baby > Skincare > Lotion,12,https://healthhub.ke/index.php?route=product/category&path=15_16_23_25
+26,15_16_23_26,Bath Wash and Shampoo,23,4,Baby & Mum > Baby > Skincare > Bath Wash and Shampoo,13,https://healthhub.ke/index.php?route=product/category&path=15_16_23_26
+27,15_16_23_27,Bath and Massage Oil,23,4,Baby & Mum > Baby > Skincare > Bath and Massage Oil,6,https://healthhub.ke/index.php?route=product/category&path=15_16_23_27
+28,15_16_23_28,Baby Jelly,23,4,Baby & Mum > Baby > Skincare > Baby Jelly,13,https://healthhub.ke/index.php?route=product/category&path=15_16_23_28
+29,15_16_29,Baby Ear Buds,16,3,Baby & Mum > Baby > Baby Ear Buds,3,https://healthhub.ke/index.php?route=product/category&path=15_16_29
+30,15_30,Mum,15,2,Baby & Mum > Mum,62,https://healthhub.ke/index.php?route=product/category&path=15_30
+31,15_30_31,Nursing,30,3,Baby & Mum > Mum > Nursing,14,https://healthhub.ke/index.php?route=product/category&path=15_30_31
+32,15_30_31_32,Feeding Bottles,31,4,Baby & Mum > Mum > Nursing > Feeding Bottles,7,https://healthhub.ke/index.php?route=product/category&path=15_30_31_32
+33,15_30_31_33,Storage Bags,31,4,Baby & Mum > Mum > Nursing > Storage Bags,2,https://healthhub.ke/index.php?route=product/category&path=15_30_31_33
+34,15_30_31_34,Sterilisers,31,4,Baby & Mum > Mum > Nursing > Sterilisers,3,https://healthhub.ke/index.php?route=product/category&path=15_30_31_34
+35,15_30_35,Nipple Cream,30,3,Baby & Mum > Mum > Nipple Cream,7,https://healthhub.ke/index.php?route=product/category&path=15_30_35
+36,15_30_36,Maternity Pads,30,3,Baby & Mum > Mum > Maternity Pads,3,https://healthhub.ke/index.php?route=product/category&path=15_30_36
+37,15_30_37,Breastpads,30,3,Baby & Mum > Mum > Breastpads,1,https://healthhub.ke/index.php?route=product/category&path=15_30_37
+38,15_30_38,Maternal Supplements,30,3,Baby & Mum > Mum > Maternal Supplements,26,https://healthhub.ke/index.php?route=product/category&path=15_30_38
+171,15_30_171,Stretch Mark Oil,30,3,Baby & Mum > Mum > Stretch Mark Oil,2,https://healthhub.ke/index.php?route=product/category&path=15_30_171
+16,16,Baby Care,,1,Baby Care,155,https://healthhub.ke/index.php?route=product/category&path=16
+39,39,Personal Care,,1,Personal Care,633,https://healthhub.ke/index.php?route=product/category&path=39
+40,39_40,Eyecare and Earcare,39,2,Personal Care > Eyecare and Earcare,53,https://healthhub.ke/index.php?route=product/category&path=39_40
+41,39_40_41,Eyecare,40,3,Personal Care > Eyecare and Earcare > Eyecare,31,https://healthhub.ke/index.php?route=product/category&path=39_40_41
+42,39_40_42,Earcare,40,3,Personal Care > Eyecare and Earcare > Earcare,20,https://healthhub.ke/index.php?route=product/category&path=39_40_42
+43,39_40_43,Earrings,40,3,Personal Care > Eyecare and Earcare > Earrings,5,https://healthhub.ke/index.php?route=product/category&path=39_40_43
+44,39_44,Sexual Health and Wellness,39,2,Personal Care > Sexual Health and Wellness,103,https://healthhub.ke/index.php?route=product/category&path=39_44
+45,39_44_45,Condoms,44,3,Personal Care > Sexual Health and Wellness > Condoms,47,https://healthhub.ke/index.php?route=product/category&path=39_44_45
+46,39_44_46,Enhancers,44,3,Personal Care > Sexual Health and Wellness > Enhancers,4,https://healthhub.ke/index.php?route=product/category&path=39_44_46
+47,39_44_47,Lubricant,44,3,Personal Care > Sexual Health and Wellness > Lubricant,23,https://healthhub.ke/index.php?route=product/category&path=39_44_47
+48,39_48,Diapers and Hygiene,39,2,Personal Care > Diapers and Hygiene,12,https://healthhub.ke/index.php?route=product/category&path=39_48
+49,39_48_49,Adult Diapers,48,3,Personal Care > Diapers and Hygiene > Adult Diapers,2,https://healthhub.ke/index.php?route=product/category&path=39_48_49
+50,39_48_50,Cotton Wool,48,3,Personal Care > Diapers and Hygiene > Cotton Wool,4,https://healthhub.ke/index.php?route=product/category&path=39_48_50
+51,39_48_51,Wipes,48,3,Personal Care > Diapers and Hygiene > Wipes,13,https://healthhub.ke/index.php?route=product/category&path=39_48_51
+52,39_52,Hair Care,39,2,Personal Care > Hair Care,94,https://healthhub.ke/index.php?route=product/category&path=39_52
+53,39_52_53,Shampoo,52,3,Personal Care > Hair Care > Shampoo,24,https://healthhub.ke/index.php?route=product/category&path=39_52_53
+54,39_52_54,Hair Removal,52,3,Personal Care > Hair Care > Hair Removal,11,https://healthhub.ke/index.php?route=product/category&path=39_52_54
+55,39_52_55,Hair Hygiene,52,3,Personal Care > Hair Care > Hair Hygiene,44,https://healthhub.ke/index.php?route=product/category&path=39_52_55
+56,39_52_56,Feminine Hygiene,52,3,Personal Care > Hair Care > Feminine Hygiene,13,https://healthhub.ke/index.php?route=product/category&path=39_52_56
+57,39_57,Foot and Nailcare,39,2,Personal Care > Foot and Nailcare,27,https://healthhub.ke/index.php?route=product/category&path=39_57
+58,39_58,Sanitary Care,39,2,Personal Care > Sanitary Care,45,https://healthhub.ke/index.php?route=product/category&path=39_58
+59,39_58_59,Tampons,58,3,Personal Care > Sanitary Care > Tampons,9,https://healthhub.ke/index.php?route=product/category&path=39_58_59
+61,39_58_61,Sanitary Pads,58,3,Personal Care > Sanitary Care > Sanitary Pads,30,https://healthhub.ke/index.php?route=product/category&path=39_58_61
+62,39_58_62,Panty Liners,58,3,Personal Care > Sanitary Care > Panty Liners,4,https://healthhub.ke/index.php?route=product/category&path=39_58_62
+63,39_63,Men,39,2,Personal Care > Men,33,https://healthhub.ke/index.php?route=product/category&path=39_63
+64,39_64,Nail Polish Remover,39,2,Personal Care > Nail Polish Remover,3,https://healthhub.ke/index.php?route=product/category&path=39_64
+65,39_65,Bathing Sponge,39,2,Personal Care > Bathing Sponge,1,https://healthhub.ke/index.php?route=product/category&path=39_65
+66,39_66,Spectacle Wipes,39,2,Personal Care > Spectacle Wipes,1,https://healthhub.ke/index.php?route=product/category&path=39_66
+67,39_67,Roll on/Anti Perspirant,39,2,Personal Care > Roll on/Anti Perspirant,87,https://healthhub.ke/index.php?route=product/category&path=39_67
+68,39_68,Sanitizers,39,2,Personal Care > Sanitizers,2,https://healthhub.ke/index.php?route=product/category&path=39_68
+69,39_69,Lipcare,39,2,Personal Care > Lipcare,73,https://healthhub.ke/index.php?route=product/category&path=39_69
+150,39_150,Soap,39,2,Personal Care > Soap,30,https://healthhub.ke/index.php?route=product/category&path=39_150
+151,39_151,Feminine Hygiene,39,2,Personal Care > Feminine Hygiene,31,https://healthhub.ke/index.php?route=product/category&path=39_151
+169,39_169,Anti Hangover,39,2,Personal Care > Anti Hangover,0,https://healthhub.ke/index.php?route=product/category&path=39_169
+70,70,Multi Vitamins,,1,Multi Vitamins,1229,https://healthhub.ke/index.php?route=product/category&path=70
+71,70_71,Digestive Enzymes,70,2,Multi Vitamins > Digestive Enzymes,175,https://healthhub.ke/index.php?route=product/category&path=70_71
+72,70_72,Weight Gain,70,2,Multi Vitamins > Weight Gain,12,https://healthhub.ke/index.php?route=product/category&path=70_72
+73,70_73,Weight Loss,70,2,Multi Vitamins > Weight Loss,26,https://healthhub.ke/index.php?route=product/category&path=70_73
+74,70_74,"Energy, Brain & Nervous System",70,2,"Multi Vitamins > Energy, Brain & Nervous System",514,https://healthhub.ke/index.php?route=product/category&path=70_74
+75,70_75,Female Health,70,2,Multi Vitamins > Female Health,121,https://healthhub.ke/index.php?route=product/category&path=70_75
+76,70_76,Cold & Flu,70,2,Multi Vitamins > Cold & Flu,54,https://healthhub.ke/index.php?route=product/category&path=70_76
+77,70_77,Hair & Skin,70,2,Multi Vitamins > Hair & Skin,83,https://healthhub.ke/index.php?route=product/category&path=70_77
+78,70_78,Eyes,70,2,Multi Vitamins > Eyes,43,https://healthhub.ke/index.php?route=product/category&path=70_78
+79,70_79,Joints & Bones,70,2,Multi Vitamins > Joints & Bones,216,https://healthhub.ke/index.php?route=product/category&path=70_79
+80,70_80,Sleep,70,2,Multi Vitamins > Sleep,93,https://healthhub.ke/index.php?route=product/category&path=70_80
+81,70_81,Paediatric Multivitamins,70,2,Multi Vitamins > Paediatric Multivitamins,82,https://healthhub.ke/index.php?route=product/category&path=70_81
+82,70_82,Adult Multivitamins,70,2,Multi Vitamins > Adult Multivitamins,200,https://healthhub.ke/index.php?route=product/category&path=70_82
+87,70_82_87,Diabetone Original 30'S,82,3,Multi Vitamins > Adult Multivitamins > Diabetone Original 30'S,2,https://healthhub.ke/index.php?route=product/category&path=70_82_87
+83,70_83,Male Health,70,2,Multi Vitamins > Male Health,72,https://healthhub.ke/index.php?route=product/category&path=70_83
+84,70_84,Probiotics,70,2,Multi Vitamins > Probiotics,30,https://healthhub.ke/index.php?route=product/category&path=70_84
+85,70_85,Vitamins & Minerals,70,2,Multi Vitamins > Vitamins & Minerals,192,https://healthhub.ke/index.php?route=product/category&path=70_85
+86,70_86,Hematinics,70,2,Multi Vitamins > Hematinics,35,https://healthhub.ke/index.php?route=product/category&path=70_86
+88,88,Medical Diagnostic,,1,Medical Diagnostic,100,https://healthhub.ke/index.php?route=product/category&path=88
+89,88_89,Diagnostics,88,2,Medical Diagnostic > Diagnostics,81,https://healthhub.ke/index.php?route=product/category&path=88_89
+90,88_89_90,Glucometer,89,3,Medical Diagnostic > Diagnostics > Glucometer,15,https://healthhub.ke/index.php?route=product/category&path=88_89_90
+91,88_89_91,Blood Pressure Monitoring Machine,89,3,Medical Diagnostic > Diagnostics > Blood Pressure Monitoring Machine,18,https://healthhub.ke/index.php?route=product/category&path=88_89_91
+92,88_89_92,Thermometer,89,3,Medical Diagnostic > Diagnostics > Thermometer,9,https://healthhub.ke/index.php?route=product/category&path=88_89_92
+93,88_89_93,Nebulizers and Vaporizers,89,3,Medical Diagnostic > Diagnostics > Nebulizers and Vaporizers,5,https://healthhub.ke/index.php?route=product/category&path=88_89_93
+94,88_89_94,Scale,89,3,Medical Diagnostic > Diagnostics > Scale,4,https://healthhub.ke/index.php?route=product/category&path=88_89_94
+95,88_89_95,Self Test Kits,89,3,Medical Diagnostic > Diagnostics > Self Test Kits,26,https://healthhub.ke/index.php?route=product/category&path=88_89_95
+96,88_89_95_96,Pregnancy,95,4,Medical Diagnostic > Diagnostics > Self Test Kits > Pregnancy,15,https://healthhub.ke/index.php?route=product/category&path=88_89_95_96
+97,88_89_95_97,Ovulation,95,4,Medical Diagnostic > Diagnostics > Self Test Kits > Ovulation,5,https://healthhub.ke/index.php?route=product/category&path=88_89_95_97
+98,88_89_95_98,Malaria,95,4,Medical Diagnostic > Diagnostics > Self Test Kits > Malaria,2,https://healthhub.ke/index.php?route=product/category&path=88_89_95_98
+99,88_89_95_99,HIV,95,4,Medical Diagnostic > Diagnostics > Self Test Kits > HIV,2,https://healthhub.ke/index.php?route=product/category&path=88_89_95_99
+100,88_89_100,Needles and Syringes,89,3,Medical Diagnostic > Diagnostics > Needles and Syringes,8,https://healthhub.ke/index.php?route=product/category&path=88_89_100
+172,88_172,Humidifier,88,2,Medical Diagnostic > Humidifier,5,https://healthhub.ke/index.php?route=product/category&path=88_172
+101,101,First Aid,,1,First Aid,263,https://healthhub.ke/index.php?route=product/category&path=101
+102,101_102,Travel,101,2,First Aid > Travel,35,https://healthhub.ke/index.php?route=product/category&path=101_102
+103,101_102_103,Stings and Bites,102,3,First Aid > Travel > Stings and Bites,28,https://healthhub.ke/index.php?route=product/category&path=101_102_103
+104,101_104,PPE,101,2,First Aid > PPE,5,https://healthhub.ke/index.php?route=product/category&path=101_104
+105,101_105,Band Aids and Bandages,101,2,First Aid > Band Aids and Bandages,51,https://healthhub.ke/index.php?route=product/category&path=101_105
+106,101_106,Bandage & Dressings,101,2,First Aid > Bandage & Dressings,37,https://healthhub.ke/index.php?route=product/category&path=101_106
+107,101_107,Antiseptic,101,2,First Aid > Antiseptic,17,https://healthhub.ke/index.php?route=product/category&path=101_107
+108,101_108,Orthopaedic Support,101,2,First Aid > Orthopaedic Support,132,https://healthhub.ke/index.php?route=product/category&path=101_108
+109,109,Digestive Health,,1,Digestive Health,205,https://healthhub.ke/index.php?route=product/category&path=109
+155,109_155,Antacid,109,2,Digestive Health > Antacid,53,https://healthhub.ke/index.php?route=product/category&path=109_155
+156,109_156,Antispasmodic,109,2,Digestive Health > Antispasmodic,7,https://healthhub.ke/index.php?route=product/category&path=109_156
+157,109_157,Probiotic,109,2,Digestive Health > Probiotic,37,https://healthhub.ke/index.php?route=product/category&path=109_157
+158,109_158,Dewormer,109,2,Digestive Health > Dewormer,8,https://healthhub.ke/index.php?route=product/category&path=109_158
+159,109_159,Anti-Colic Agents,109,2,Digestive Health > Anti-Colic Agents,6,https://healthhub.ke/index.php?route=product/category&path=109_159
+160,109_160,Laxatives,109,2,Digestive Health > Laxatives,13,https://healthhub.ke/index.php?route=product/category&path=109_160
+161,109_161,Prebiotic and Probiotic,109,2,Digestive Health > Prebiotic and Probiotic,25,https://healthhub.ke/index.php?route=product/category&path=109_161
+162,109_162,Anti - Flatulence,109,2,Digestive Health > Anti - Flatulence,2,https://healthhub.ke/index.php?route=product/category&path=109_162
+163,109_163,Alkalizing Agent,109,2,Digestive Health > Alkalizing Agent,5,https://healthhub.ke/index.php?route=product/category&path=109_163
+164,109_164,Oral Rehydration Salts and Agents,109,2,Digestive Health > Oral Rehydration Salts and Agents,5,https://healthhub.ke/index.php?route=product/category&path=109_164
+165,109_165,Antiemetic,109,2,Digestive Health > Antiemetic,1,https://healthhub.ke/index.php?route=product/category&path=109_165
+166,109_166,Antidiarrheal Agent,109,2,Digestive Health > Antidiarrheal Agent,5,https://healthhub.ke/index.php?route=product/category&path=109_166
+167,109_167,Travel Sickness,109,2,Digestive Health > Travel Sickness,2,https://healthhub.ke/index.php?route=product/category&path=109_167
+168,109_168,Digestive Enzymes,109,2,Digestive Health > Digestive Enzymes,98,https://healthhub.ke/index.php?route=product/category&path=109_168
+111,111,Cough & Cold,,1,Cough & Cold,178,https://healthhub.ke/index.php?route=product/category&path=111
+112,111_112,Adult Cold Remedies (Cough & Cold),111,2,Cough & Cold > Adult Cold Remedies (Cough & Cold),88,https://healthhub.ke/index.php?route=product/category&path=111_112
+113,111_113,Rubs,111,2,Cough & Cold > Rubs,8,https://healthhub.ke/index.php?route=product/category&path=111_113
+114,111_114,Inhaler Sticks,111,2,Cough & Cold > Inhaler Sticks,6,https://healthhub.ke/index.php?route=product/category&path=111_114
+115,111_115,Nasal Drops & Sprays,111,2,Cough & Cold > Nasal Drops & Sprays,24,https://healthhub.ke/index.php?route=product/category&path=111_115
+116,116,Smoking Cessation,,1,Smoking Cessation,25,https://healthhub.ke/index.php?route=product/category&path=116
+117,116_117,Smoking Cessation,116,2,Smoking Cessation > Smoking Cessation,23,https://healthhub.ke/index.php?route=product/category&path=116_117
+118,116_118,Hangover,116,2,Smoking Cessation > Hangover,2,https://healthhub.ke/index.php?route=product/category&path=116_118
+119,119,Formulas,,1,Formulas,41,https://healthhub.ke/index.php?route=product/category&path=119
+120,119_120,Adult,119,2,Formulas > Adult,15,https://healthhub.ke/index.php?route=product/category&path=119_120
+121,119_121,Glucose,119,2,Formulas > Glucose,9,https://healthhub.ke/index.php?route=product/category&path=119_121
+170,119_170,Sweeteners,119,2,Formulas > Sweeteners,10,https://healthhub.ke/index.php?route=product/category&path=119_170
+122,122,Skin Care,,1,Skin Care,950,https://healthhub.ke/index.php?route=product/category&path=122
+123,122_123,Moisturisers,122,2,Skin Care > Moisturisers,58,https://healthhub.ke/index.php?route=product/category&path=122_123
+124,122_124,Oils,122,2,Skin Care > Oils,43,https://healthhub.ke/index.php?route=product/category&path=122_124
+125,122_125,Lotion,122,2,Skin Care > Lotion,111,https://healthhub.ke/index.php?route=product/category&path=122_125
+126,122_126,Cleanser,122,2,Skin Care > Cleanser,102,https://healthhub.ke/index.php?route=product/category&path=122_126
+152,122_126_152,Acne,126,3,Skin Care > Cleanser > Acne,19,https://healthhub.ke/index.php?route=product/category&path=122_126_152
+153,122_126_153,Eczema,126,3,Skin Care > Cleanser > Eczema,4,https://healthhub.ke/index.php?route=product/category&path=122_126_153
+127,122_127,Face Wash,122,2,Skin Care > Face Wash,26,https://healthhub.ke/index.php?route=product/category&path=122_127
+128,122_128,Day and Night Cream,122,2,Skin Care > Day and Night Cream,30,https://healthhub.ke/index.php?route=product/category&path=122_128
+129,122_129,Toner,122,2,Skin Care > Toner,31,https://healthhub.ke/index.php?route=product/category&path=122_129
+130,122_130,Body Wash,122,2,Skin Care > Body Wash,43,https://healthhub.ke/index.php?route=product/category&path=122_130
+131,122_131,Creams,122,2,Skin Care > Creams,70,https://healthhub.ke/index.php?route=product/category&path=122_131
+132,122_132,Scrub,122,2,Skin Care > Scrub,27,https://healthhub.ke/index.php?route=product/category&path=122_132
+133,122_133,Mask,122,2,Skin Care > Mask,20,https://healthhub.ke/index.php?route=product/category&path=122_133
+134,122_134,Body Butter and Balms,122,2,Skin Care > Body Butter and Balms,6,https://healthhub.ke/index.php?route=product/category&path=122_134
+135,122_135,Serums,122,2,Skin Care > Serums,76,https://healthhub.ke/index.php?route=product/category&path=122_135
+136,122_136,Body Scrub,122,2,Skin Care > Body Scrub,1,https://healthhub.ke/index.php?route=product/category&path=122_136
+137,122_137,"Hand, Foot and Nail Cream",122,2,"Skin Care > Hand, Foot and Nail Cream",14,https://healthhub.ke/index.php?route=product/category&path=122_137
+138,122_138,Acne Care,122,2,Skin Care > Acne Care,70,https://healthhub.ke/index.php?route=product/category&path=122_138
+139,122_139,Anti-Pigmentation,122,2,Skin Care > Anti-Pigmentation,11,https://healthhub.ke/index.php?route=product/category&path=122_139
+140,122_140,Sun Care,122,2,Skin Care > Sun Care,35,https://healthhub.ke/index.php?route=product/category&path=122_140
+141,122_141,Skin Healing,122,2,Skin Care > Skin Healing,227,https://healthhub.ke/index.php?route=product/category&path=122_141
+142,122_142,Eczema Care,122,2,Skin Care > Eczema Care,26,https://healthhub.ke/index.php?route=product/category&path=122_142
+143,122_143,Antiwrinkle,122,2,Skin Care > Antiwrinkle,13,https://healthhub.ke/index.php?route=product/category&path=122_143
+144,122_144,Anti Ageing,122,2,Skin Care > Anti Ageing,36,https://healthhub.ke/index.php?route=product/category&path=122_144
+145,122_145,Shampoo,122,2,Skin Care > Shampoo,21,https://healthhub.ke/index.php?route=product/category&path=122_145
+146,122_146,Hair Conditioner,122,2,Skin Care > Hair Conditioner,10,https://healthhub.ke/index.php?route=product/category&path=122_146
+178,122_178,Sunscreen,122,2,Skin Care > Sunscreen,40,https://healthhub.ke/index.php?route=product/category&path=122_178
+185,122_185,Face Mask,122,2,Skin Care > Face Mask,1,https://healthhub.ke/index.php?route=product/category&path=122_185
+147,147,Oils,,1,Oils,100,https://healthhub.ke/index.php?route=product/category&path=147
+148,148,Lozegens,,1,Lozegens,67,https://healthhub.ke/index.php?route=product/category&path=148
+149,149,Test Main,,1,Test Main,0,https://healthhub.ke/index.php?route=product/category&path=149
+173,173,Sporting Supplements,,1,Sporting Supplements,72,https://healthhub.ke/index.php?route=product/category&path=173
+174,173_174,Post WorkOut,173,2,Sporting Supplements > Post WorkOut,23,https://healthhub.ke/index.php?route=product/category&path=173_174
+175,173_175,Pre Workout,173,2,Sporting Supplements > Pre Workout,2,https://healthhub.ke/index.php?route=product/category&path=173_175
+176,173_176,Mass Gainers,173,2,Sporting Supplements > Mass Gainers,16,https://healthhub.ke/index.php?route=product/category&path=173_176
+177,173_177,Fat Shredders,173,2,Sporting Supplements > Fat Shredders,2,https://healthhub.ke/index.php?route=product/category&path=173_177
+179,173_179,Intra Workout,173,2,Sporting Supplements > Intra Workout,2,https://healthhub.ke/index.php?route=product/category&path=173_179
+180,173_180,Body Toners,173,2,Sporting Supplements > Body Toners,2,https://healthhub.ke/index.php?route=product/category&path=173_180
+181,173_181,Hydration,173,2,Sporting Supplements > Hydration,18,https://healthhub.ke/index.php?route=product/category&path=173_181
+182,182,Confectionery,,1,Confectionery,5,https://healthhub.ke/index.php?route=product/category&path=182
+183,182_183,Chocolates,182,2,Confectionery > Chocolates,3,https://healthhub.ke/index.php?route=product/category&path=182_183
+184,184,Fragrance,,1,Fragrance,16,https://healthhub.ke/index.php?route=product/category&path=184

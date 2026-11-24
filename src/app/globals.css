@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+/* dark: utilities follow the "dark" class on <html> (see theme-dark.css) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-50: #f8edfe;
+  --color-brand-100: #efd6fc;
+  --color-brand-200: #ddadf8;
+  --color-brand-300: #c77af2;
+  --color-brand-500: #ae2fe9;
+  --color-brand-600: #a10fe4;
+  --color-brand-700: #850cbd;
+  --color-brand-900: #560879;
+  --color-accent: #1cbba3;
+  --color-accent-soft: #e3f7f3;
+  --color-lime: #9ee86c;
+  --color-sun: #ffe66d;
+  --color-ink: #212529;
+  --color-muted: #495057;
+  --color-faint: #919eab;
+  --color-line: #dfe3e8;
+  --color-canvas: #ffffff;
+  --color-well: #f4f6f8;
+  --color-sale: #cb0233;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 16px;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+@layer components {
+.btn-primary {
+  @apply btn bg-brand-600 text-white hover:bg-brand-700;
+}
+.btn-soft {
+  @apply btn bg-brand-100 text-brand-700 hover:bg-brand-200;
+}
+.btn-outline {
+  @apply btn border border-line bg-white text-ink hover:border-brand-500 hover:text-brand-700;
+}
+.btn-danger {
+  @apply btn bg-sale text-white hover:opacity-90;
+}
+.input {
+  @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+}
+.label {
+  @apply mb-1 block text-sm font-medium text-ink;
+}
+.card {
+  @apply rounded-[var(--radius-card)] border border-line bg-white;
+}
+.font-heading {
+  font-family: var(--font-heading);
+}
+.section-title {
+  font-family: var(--font-heading);
+  @apply text-2xl font-bold text-ink sm:text-[32px] sm:leading-tight;
+}
+.container-x {
+  @apply mx-auto w-full max-w-[1664px] px-4;
+}
+.prose-hh {
+  @apply text-[15px] leading-relaxed text-ink;
+}
+.prose-hh p {
+  @apply mb-3;
+}
+.prose-hh ul {
+  @apply mb-3 list-disc pl-5;
+}
+.prose-hh ol {
+  @apply mb-3 list-decimal pl-5;
+}
+.prose-hh h1,
+.prose-hh h2,
+.prose-hh h3,
+.prose-hh h4 {
+  @apply mt-4 mb-2 font-semibold;
+}
+.prose-hh table {
+  @apply mb-3 w-full text-sm;
+}
+.prose-hh td,
+.prose-hh th {
+  @apply border border-line p-2;
+}
+.prose-hh img {
+  @apply h-auto max-w-full;
+}
+
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@layer components {
+/* ---------------- Admin (Sellzy-style) ---------------- */
+.admin {
+  --adm-sidebar: #560879;
+  --adm-active: #850cbd;
+  --adm-section: #7ee8d6;
+  --adm-primary: #a10fe4;
+  --adm-bg: rgba(0, 171, 85, 0.08);
+  --adm-border: #dfe3e8;
+  --adm-heading: #212529;
+  --adm-text: #495057;
+  --adm-danger: #cb0233;
+  font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  color: var(--adm-heading);
+}
+.admin .font-num {
+  font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+}
+.admin .card {
+  @apply rounded-2xl border border-[#dfe3e8] bg-white;
+}
+.admin .btn-primary {
+  @apply rounded-full bg-[#a10fe4] px-4 py-1.5 text-[13px] font-bold text-white hover:bg-[#850cbd];
+}
+.admin .btn-soft {
+  @apply rounded-full bg-[#efd6fc] px-4 py-1.5 text-[13px] font-bold text-[#850cbd] hover:bg-[#e2bdf9];
+}
+.admin .btn-outline {
+  @apply rounded-full border-0 bg-white px-4 py-1.5 text-[13px] font-bold text-[#212529] shadow-[0_0_0_1px_rgba(145,158,171,0.32)] hover:shadow-[0_0_0_1px_#a10fe4];
+}
+.admin .btn-danger {
+  @apply rounded-full bg-white px-4 py-1.5 text-[13px] font-bold text-[#cb0233] shadow-[0_0_0_1px_rgba(255,72,66,0.48)] hover:bg-[#fff1f0];
+}
+.admin .input {
+  @apply rounded-lg border-0 bg-white px-3.5 py-2 text-sm shadow-[0_0_0_1px_rgba(145,158,171,0.32)] focus:shadow-[0_0_0_2px_#a10fe4] focus:ring-0;
+}
+.admin .label {
+  @apply text-[13px] font-semibold text-[#495057];
+}
+.adm-table {
+  @apply w-full text-sm;
+}
+.adm-table th {
+  @apply whitespace-nowrap py-3 pl-5 pr-3 text-left text-sm font-semibold text-[#212529];
+}
+.adm-table td {
+  @apply py-4 pl-5 pr-3 text-sm text-[#495057];
+}
+.adm-table tbody tr {
+  @apply border-t border-[#dfe3e8]/70 transition hover:bg-[#f9fafb];
+}
+.adm-badge {
+  font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  @apply inline-flex items-center whitespace-nowrap rounded-full px-2 py-1 text-xs leading-none font-medium;
+}
+.adm-badge-warning {
+  @apply bg-[rgba(255,193,7,0.16)] text-[#b78103];
+}
+.adm-badge-success {
+  @apply bg-[rgba(0,171,85,0.16)] text-[#850cbd];
+}
+.adm-badge-danger {
+  @apply bg-[rgba(255,72,66,0.16)] text-[#ae013c];
+}
+.adm-badge-info {
+  @apply bg-[rgba(24,144,255,0.16)] text-[#0c53b7];
+}
+.adm-badge-neutral {
+  @apply bg-[rgba(145,158,171,0.16)] text-[#495057];
+}
+.adm-badge-purple {
+  @apply bg-[rgba(130,106,249,0.16)] text-[#5b44c9];
+}
+}
+
+/* Hugeicons (stroke rounded) as CSS masks: one definition, tiny markup per product card */
+.hi-cart{-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M8%2016L16.7201%2015.2733C19.4486%2015.046%2020.0611%2014.45%2020.3635%2011.7289L21%206%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M6%206H22%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2220%22%20r%3D%222%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%2220%22%20r%3D%222%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M8%2020L15%2020%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M2%202H2.966C3.91068%202%204.73414%202.62459%204.96326%203.51493L7.93852%2015.0765C8.08887%2015.6608%207.9602%2016.2797%207.58824%2016.7616L6.63213%2018%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M8%2016L16.7201%2015.2733C19.4486%2015.046%2020.0611%2014.45%2020.3635%2011.7289L21%206%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M6%206H22%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2220%22%20r%3D%222%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%2220%22%20r%3D%222%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M8%2020L15%2020%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M2%202H2.966C3.91068%202%204.73414%202.62459%204.96326%203.51493L7.93852%2015.0765C8.08887%2015.6608%207.9602%2016.2797%207.58824%2016.7616L6.63213%2018%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat}
+.hi-heart{-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M2%208.69444C2%2013.0348%207.58942%2017.858%2010.4107%2019.9677C11.3601%2020.6776%2012.6399%2020.6776%2013.5893%2019.9677C16.4106%2017.858%2022%2013.0348%2022%208.69444C22%205.82563%2019.8947%203.5%2017%203.5C15.5%203.5%2014%204%2012%206C10%204%208.5%203.5%207%203.5C4.10526%203.5%202%205.82563%202%208.69444Z%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M2%208.69444C2%2013.0348%207.58942%2017.858%2010.4107%2019.9677C11.3601%2020.6776%2012.6399%2020.6776%2013.5893%2019.9677C16.4106%2017.858%2022%2013.0348%2022%208.69444C22%205.82563%2019.8947%203.5%2017%203.5C15.5%203.5%2014%204%2012%206C10%204%208.5%203.5%207%203.5C4.10526%203.5%202%205.82563%202%208.69444Z%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat}
+.hi-view{-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21.544%2011.045C21.848%2011.4713%2022%2011.6845%2022%2012C22%2012.3155%2021.848%2012.5287%2021.544%2012.955C20.1779%2014.8706%2016.6892%2019%2012%2019C7.31078%2019%203.8221%2014.8706%202.45604%2012.955C2.15201%2012.5287%202%2012.3155%202%2012C2%2011.6845%202.15201%2011.4713%202.45604%2011.045C3.8221%209.12944%207.31078%205%2012%205C16.6892%205%2020.1779%209.12944%2021.544%2011.045Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M15%2012C15%2010.3431%2013.6569%209%2012%209C10.3431%209%209%2010.3431%209%2012C9%2013.6569%2010.3431%2015%2012%2015C13.6569%2015%2015%2013.6569%2015%2012Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21.544%2011.045C21.848%2011.4713%2022%2011.6845%2022%2012C22%2012.3155%2021.848%2012.5287%2021.544%2012.955C20.1779%2014.8706%2016.6892%2019%2012%2019C7.31078%2019%203.8221%2014.8706%202.45604%2012.955C2.15201%2012.5287%202%2012.3155%202%2012C2%2011.6845%202.15201%2011.4713%202.45604%2011.045C3.8221%209.12944%207.31078%205%2012%205C16.6892%205%2020.1779%209.12944%2021.544%2011.045Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M15%2012C15%2010.3431%2013.6569%209%2012%209C10.3431%209%209%2010.3431%209%2012C9%2013.6569%2010.3431%2015%2012%2015C13.6569%2015%2015%2013.6569%2015%2012Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat}
+.hi-star-mask{-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22m12%202.8%202.8%206%206.5.6-4.9%204.3%201.5%206.4L12%2016.8%206.1%2020.1l1.5-6.4-4.9-4.3%206.5-.6z%22%2F%3E%3C%2Fsvg%3E") left/16px 16px repeat-x;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22m12%202.8%202.8%206%206.5.6-4.9%204.3%201.5%206.4L12%2016.8%206.1%2020.1l1.5-6.4-4.9-4.3%206.5-.6z%22%2F%3E%3C%2Fsvg%3E") left/16px 16px repeat-x}
+.hi {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+}
+/* Star rating: grey row of 5 stars with a gold overlay clipped to the score */
+.stars {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 16px;
+  background: var(--color-line);
+}
+.stars > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: #ffab00;
+}
+
+/* Scroll reveal (see components/Reveal.tsx): fade up 30px, like the reference shop. */
+.reveal-on [data-reveal],
+.reveal-on .section-title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-on [data-reveal].is-in,
+.reveal-on .section-title.is-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on [data-reveal],
+  .reveal-on .section-title { opacity: 1; transform: none; transition: none; }
+}
+
+/* Hero slide text fades up line by line each time a slide becomes active. */
+@keyframes fade-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+.hero-in > * { animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-in > :nth-child(2) { animation-delay: 0.12s; }
+.hero-in > :nth-child(3) { animation-delay: 0.24s; }
+.hero-in > :nth-child(4) { animation-delay: 0.36s; }
+@media (prefers-reduced-motion: reduce) { .hero-in > * { animation: none; } }
+
+/* Admin bell: a short ring when there are new orders. */
+@keyframes bell { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(14deg); } 30% { transform: rotate(-12deg); } 45% { transform: rotate(8deg); } 60% { transform: rotate(-6deg); } 75% { transform: rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) { [class*="animate-[bell"] { animation: none !important; } }
+
+@keyframes navbar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+
+/* Admin sidebar: slim, see-through scrollbar that blends into the purple (no white track or arrows). */
+.sidebar-scroll { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.18) transparent; }
+.sidebar-scroll:hover { scrollbar-color: rgba(255, 255, 255, 0.35) transparent; }
+.sidebar-scroll::-webkit-scrollbar { width: 6px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-button { display: none; height: 0; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 999px; }
+.sidebar-scroll:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.35); }
+
+/* Admin content area: slim neutral scrollbars to match. */
+.admin { scrollbar-width: thin; scrollbar-color: rgba(145, 158, 171, 0.4) transparent; }
+.admin ::-webkit-scrollbar { width: 8px; height: 8px; }
+.admin ::-webkit-scrollbar-track { background: transparent; }
+.admin ::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+.admin ::-webkit-scrollbar-thumb { background: rgba(145, 158, 171, 0.4); border-radius: 999px; }
+.admin .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); }
+.admin .sidebar-scroll:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.35); }

@@ -1,0 +1,111 @@
+/*
+ * Dark mode for the shop and the admin. Turned on by the "dark" class on <html>
+ * (set before first paint by the script in app/layout.tsx; toggled by ThemeToggle).
+ *
+ * 1. Theme tokens (ink, muted, line, well, canvas, brand tints...) switch here, which covers most of the UI.
+ * 2. The fixed colours used directly in markup (mostly the admin) are mapped below.
+ * These rules are unlayered, so they win over Tailwind's utility layer.
+ * Product photo panels (#f4f3f5) deliberately stay light: the photos have white backgrounds.
+ */
+
+.dark {
+  color-scheme: dark;
+  --color-ink: #ece9f1;
+  --color-muted: #b9b3c4;
+  --color-faint: #8a8396;
+  --color-line: #352e40;
+  --color-well: #241f2d;
+  --color-canvas: #14111a;
+  --color-brand-50: #2a1838;
+  --color-brand-100: #36204c;
+  --color-brand-200: #4b2b68;
+  --color-accent-soft: #11352f;
+  --surface: #1c1824;
+  --surface-2: #241f2d;
+  --text: #ece9f1;
+  --text-2: #b9b3c4;
+  --text-3: #8a8396;
+  --border: #352e40;
+  --purple-text: #cf8ef6;
+}
+
+/* ---- surfaces ---- */
+.dark .bg-white:not(.keep-white),
+.dark .bg-canvas { background-color: var(--surface); }
+.dark .bg-white\/80 { background-color: rgb(28 24 36 / 0.8); }
+.dark .bg-white\/90 { background-color: rgb(28 24 36 / 0.9); }
+.dark .bg-\[\#f9fafb\],
+.dark .bg-\[\#f4f6f8\],
+.dark .hover\:bg-\[\#f9fafb\]:hover,
+.dark .hover\:bg-\[\#f4f6f8\]:hover,
+.dark .hover\:bg-well:hover { background-color: var(--surface-2); }
+.dark .bg-\[\#efd6fc\] { background-color: #36204c; }
+.dark .bg-\[\#fff1f0\], .dark .hover\:bg-\[\#fff1f0\]:hover, .dark .bg-red-50 { background-color: rgb(255 72 66 / 0.12); }
+.dark .bg-\[\#dfe3e8\], .dark .bg-line { background-color: var(--border); }
+.dark .border-\[\#dfe3e8\], .dark .border-\[\#dfe3e8\]\/70 { border-color: var(--border); }
+.dark .bg-ink { background-color: #ece9f1; color: #14111a; }
+
+/* ---- text ---- */
+.dark .text-\[\#212529\], .dark .text-\[\#212b36\], .dark .text-black, .dark .hover\:text-\[\#212529\]:hover { color: var(--text); }
+.dark .text-\[\#495057\] { color: var(--text-2); }
+.dark .text-\[\#637381\], .dark .text-\[\#919eab\] { color: var(--text-3); }
+.dark .text-\[\#a10fe4\], .dark .text-brand-600, .dark .hover\:text-brand-600:hover, .dark .hover\:text-\[\#a10fe4\]:hover { color: var(--purple-text); }
+.dark .text-\[\#850cbd\], .dark .text-brand-700 { color: #dcaaf8; }
+.dark .text-brand-900, .dark .text-\[\#560879\] { color: #ead0fb; }
+.dark .text-\[\#b78103\] { color: #ffcd4d; }
+.dark .text-\[\#0c53b7\] { color: #74b4ff; }
+.dark .text-\[\#ae013c\], .dark .text-\[\#b71d18\], .dark .text-\[\#cb0233\], .dark .text-sale { color: #ff8a8a; }
+.dark .text-\[\#5b44c9\] { color: #b8a9ff; }
+/* buttons/pills that use a light text on purple keep it */
+.dark .bg-brand-600.text-white, .dark .bg-\[\#a10fe4\].text-white { color: #fff; }
+
+/* the dark pill in "My Orders" filters flips to light */
+.dark .bg-ink.text-white { color: #14111a; }
+
+/* ---- logos: purple artwork needs a light chip on dark backgrounds ---- */
+.dark .logo-chip { background: #fff; border-radius: 12px; padding: 4px 10px; }
+
+/* ---- pastel stat tiles (inline backgrounds): dim them so light text reads well ---- */
+.dark .tile-tint { background-image: linear-gradient(rgb(20 17 26 / 0.74), rgb(20 17 26 / 0.74)); }
+.dark .tile-tint .bg-white { background-color: rgb(255 255 255 / 0.1); }
+
+/* ---- selects drawn with a dark chevron image ---- */
+.dark select[class*="bg-[url"] {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ece9f1' stroke-width='2'><path d='m6 9 6 6 6-6'/></svg>");
+}
+
+/* ---- admin components ---- */
+.dark .admin { --adm-heading: var(--text); --adm-text: var(--text-2); --adm-border: var(--border); color: var(--text); }
+.dark .admin .card, .dark .admin .btn-outline, .dark .admin .input { background-color: var(--surface); color: var(--text); }
+.dark .admin .btn-soft { background-color: #36204c; color: #dcaaf8; }
+.dark .admin .btn-danger { background-color: var(--surface); }
+.dark .admin .label, .dark .adm-table td { color: var(--text-2); }
+.dark .adm-table th { color: var(--text); }
+.dark .adm-table tbody tr { border-color: var(--border); }
+.dark .adm-table tbody tr:hover { background-color: var(--surface-2); }
+.dark .adm-badge-warning { color: #ffcd4d; }
+.dark .adm-badge-success { color: #dcaaf8; }
+.dark .adm-badge-danger { color: #ff8a8a; }
+.dark .adm-badge-info { color: #74b4ff; }
+.dark .adm-badge-neutral { color: var(--text-2); }
+.dark .adm-badge-purple { color: #b8a9ff; }
+
+/* floating labels sit on the card surface */
+.dark .peer-focus\:bg-white, .dark .bg-white.peer-placeholder-shown\:bg-transparent { background-color: var(--surface); }
+
+/* inputs and date pickers */
+.dark input, .dark select, .dark textarea { color-scheme: dark; }
+
+/* scrollbars in the admin content area */
+.dark .admin { scrollbar-color: rgb(255 255 255 / 0.18) transparent; }
+
+/* table cells coloured from the <tbody> (DataTable) and a grey-label variant */
+.dark .\[\&_td\]\:text-\[\#212529\] td { color: var(--text); }
+.dark .\[\&_label\]\:bg-\[\#f9fafb\] label { background-color: var(--surface-2); }
+
+/* forced (!important) colour utilities need forced dark versions */
+.dark .\!text-\[\#495057\] { color: var(--text-2) !important; }
+.dark .\!text-\[\#637381\], .dark .\!text-\[\#919eab\] { color: var(--text-3) !important; }
+.dark .\!text-\[\#a10fe4\] { color: var(--purple-text) !important; }
+.dark .\!bg-white:not(.keep-white) { background-color: var(--surface) !important; }
+.dark .\!bg-\[\#f9fafb\], .dark .\!bg-\[\#f4f6f8\] { background-color: var(--surface-2) !important; }
