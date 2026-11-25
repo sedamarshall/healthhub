@@ -161,10 +161,10 @@ export function SectionHead({ title, subtitle, href, arrowsFor }: { title: strin
 }
 
 /** Horizontal slider of cards (2 / 2 / 3 / 4 per view; 12px gaps on phones, 24px from sm). */
-export function ProductRail({ id, products, basis = "basis-[calc((100%-12px)/2)] sm:basis-[calc((100%-24px)/2)] lg:basis-[calc((100%-48px)/3)] xl:basis-[calc((100%-72px)/4)]" }: { id: string; products: CardProduct[]; basis?: string }) {
+export function ProductRail({ id, products, basis = "basis-[calc((100%-12px)/2)] sm:basis-[calc((100%-24px)/2)] lg:basis-[calc((100%-48px)/3)] xl:basis-[calc((100%-72px)/4)]", gap = "gap-3 sm:gap-6" }: { id: string; products: CardProduct[]; basis?: string; gap?: string }) {
   if (!products.length) return null;
   return (
-    <div id={id} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 sm:gap-6">
+    <div id={id} className={`scrollbar-none flex snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2 ${gap}`}>
       {products.map((p) => (
         <div key={p.id} className={`shrink-0 snap-start ${basis}`}>
           <ProductCard p={p} />

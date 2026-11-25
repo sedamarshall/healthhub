@@ -106,8 +106,9 @@ export default async function Home() {
       </section>
 
       <Band color="bg-lime" title="Best Selling Products" subtitle="Our customers' favourites, in stock now">
-        {/* 6 across on desktop; 12 products fill whole rows at 2, 3, 4 and 6 columns */}
-        <ProductGrid products={featured.slice(0, 12)} cols="md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xl:!gap-4" />
+        {/* One row: 6 across on desktop (4 / 3 / 2 on smaller screens); the arrows scroll to the next set */}
+        <ProductRail id="rail-best" products={featured} basis="basis-[calc((100%-12px)/2)] sm:basis-[calc((100%-48px)/3)] lg:basis-[calc((100%-72px)/4)] xl:basis-[calc((100%-80px)/6)]" gap="gap-3 sm:gap-6 xl:gap-4" />
+        <div className="mt-8 flex justify-center"><RailArrows target="rail-best" light /></div>
       </Band>
 
       <section className="container-x py-8">
