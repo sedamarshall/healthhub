@@ -44,14 +44,14 @@ export function CartButton({ count }: { count: number }) {
 
   return (
     <>
-      <button type="button" onClick={() => { setOpen(true); load(); }} className="group flex items-center gap-2.5" aria-label={`Cart, ${count} items`} aria-haspopup="dialog">
+      <button type="button" onClick={() => { setOpen(true); load(); }} className="group flex items-center gap-2.5" aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`} aria-haspopup="dialog">
         <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-brand-700 transition-colors group-hover:bg-brand-600 group-hover:text-white lg:h-11 lg:w-11">
           <CartIcon />
           {count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-bold text-white lg:hidden">{count}</span>}
         </span>
         <span className="hidden text-left leading-tight lg:block">
           <span className="block text-xs text-muted">Cart</span>
-          <span className="block text-[15px] text-ink">{count}- Items</span>
+          <span className="block whitespace-nowrap text-[15px] text-ink">{count}- Items</span>
         </span>
       </button>
 

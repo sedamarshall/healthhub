@@ -4,8 +4,9 @@ import { prisma } from "@/lib/db";
 import { orderStatusLabel } from "@/lib/config";
 import { isPickup } from "@/lib/mail";
 import { kes } from "@/lib/utils";
-import { markOrderPaid, nextStatuses, updateOrderStatus } from "../../actions";
+import { markOrderPaid, nextStatuses } from "../../actions";
 import { ConfirmSubmit } from "../../ui/ConfirmSubmit";
+import { StatusUpdate } from "./StatusUpdate";
 import { createRefund } from "../../actions-more";
 import { RxReview } from "../../prescriptions/RxReview";
 import { FInput, FSelect, ModuleHeader, Section, fmtDate } from "../../ui/kit";
@@ -35,23 +36,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
     <div className="space-y-6">
       <ModuleHeader title={`Order #${order.number}`} back="/admin/orders">
         {next.length > 0 && (
-          <form action={updateOrderStatus} className="flex items-center gap-2">
-            <input type="hidden" name="id" value={order.id} />
-            <select name="status" defaultValue={next[0]} aria-label="Move order to" className="h-9 rounded-full bg-[#f4f6f8] px-3 text-sm outline-none">
-              {next.map((st) => (
-                <option key={st} value={st}>Move to: {orderStatusLabel(st, pickup)}</option>
-              ))}
-            </select>
-            <ConfirmSubmit
-              title={`Update order #${order.number}?`}
-              message="The customer will get an email about this status (Out for delivery, Delivered and Cancelled send emails)."
-              confirmLabel="Update"
-              tone="success"
-              className="inline-flex h-9 items-center rounded-full bg-[#a10fe4] px-4 text-sm font-bold text-white hover:bg-[#850cbd]"
-            >
-              Update
-            </ConfirmSubmit>
-          </form>
+          <StatusUpdate key={order.status} orderId={order.id} number={order.number} paid={order.paymentStatus === "paid"} options={next.map((st) => ({ value: st, label: orderStatusLabel(st, pickup) }))} />
         )}
       </ModuleHeader>
 

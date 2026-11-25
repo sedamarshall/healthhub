@@ -73,8 +73,6 @@ export function AdminShell({
           children: [
             { label: "All Orders", href: "/admin/orders" },
             { label: "Return & Refund", href: "/admin/refunds" },
-            { label: "Abandoned Cart", href: "/admin/abandoned-carts" },
-            { label: "Transactions", href: "/admin/transactions" },
           ],
         },
         { label: "Prescriptions", href: "/admin/prescriptions", icon: <IRx />, badge: counts.pendingRx },

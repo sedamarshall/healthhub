@@ -339,7 +339,7 @@ export function CheckoutForm({
                 <button disabled={pending || zones.length === 0} className={primaryBtn}>
                   {pending ? "Placing order…" : hasRx ? "Confirm & Send for Review" : "Confirm Order"}
                 </button>
-                <p className="text-xs text-muted">{hasRx ? "You'll pay after your prescription is approved." : "You'll complete payment on the next screen."}</p>
+                <p className="text-xs text-muted">{hasRx ? "You'll pay after your prescription is approved." : noPayment ? "We'll call you to arrange payment." : "You'll complete payment on the next screen."}</p>
               </div>
             </Step>
           </div>

@@ -55,7 +55,7 @@ export function AccountMenu({ session }: { session: Session }) {
   return (
     <>
       <div className="group relative hidden lg:block">
-        <button type="button" aria-haspopup="menu" className="flex items-center gap-2.5 py-3" onClick={() => !session && setPanel("login")}>
+        <button type="button" aria-haspopup="menu" aria-label={session ? `Account: ${session.name}` : "Account: log in"} className="flex items-center gap-2.5 py-3" onClick={() => !session && setPanel("login")}>
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 text-brand-700 transition-colors group-hover:bg-brand-600 group-hover:text-white">
             <HugeiconsIcon icon={LockKeyIcon} size={22} strokeWidth={1.6} />
           </span>

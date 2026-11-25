@@ -46,7 +46,7 @@ export default async function OrderPage({ params, searchParams }: Props) {
         ? { title: "Thanks For Your Order", text: "Our pharmacist is reviewing your prescription. We'll email you when it's approved so you can pay. Keep this page to come back to it.", tone: "bg-accent-soft" }
         : paid
           ? { title: "Thanks For Your Order", text: `We've received your payment${lastPayment?.receipt ? ` (receipt ${lastPayment.receipt})` : ""} and your order is now being processed.`, tone: "bg-brand-50" }
-          : { title: "Thanks For Your Order", text: "We've received your order. Complete payment below to confirm it.", tone: "bg-brand-50" };
+          : { title: "Thanks For Your Order", text: methods.ipay ? "We've received your order. Complete payment below to confirm it." : "We've received your order. We'll call you shortly to arrange payment.", tone: "bg-brand-50" };
 
   const box = "overflow-hidden rounded-2xl border border-line";
   const head = "bg-well px-6 py-4 font-heading text-xl font-bold";
