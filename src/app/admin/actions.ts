@@ -51,7 +51,9 @@ export async function saveProduct(_prev: FormState, form: FormData): Promise<For
   }
 
   const descriptionHtml = sanitizeHtml(d.descriptionHtml ?? "");
-  const salePrice = d.salePrice === "" || d.salePrice === undefined || d.salePrice === 0 ? null : d.salePrice;
+  // The discount switch on the form: off clears any discount when saving.
+  const discountOn = form.get("discountOn") === "on";
+  const salePrice = !discountOn || d.salePrice === "" || d.salePrice === undefined || d.salePrice === 0 ? null : d.salePrice;
   if (salePrice !== null && salePrice >= d.price) return { error: "Sale price must be lower than the regular price" };
 
   const toDate = (v?: string) => (v ? new Date(v) : null);
@@ -82,9 +84,12 @@ export async function saveProduct(_prev: FormState, form: FormData): Promise<For
 
   // Upload new images first so a bad file doesn't leave a half-saved product
   const files = form.getAll("images").filter((f): f is File => f instanceof File && f.size > 0);
+  const coverFile = form.get("cover");
   let urls: string[] = [];
+  let coverUrl: string | null = null;
   try {
     urls = await Promise.all(files.map(saveProductImage));
+    if (coverFile instanceof File && coverFile.size > 0) coverUrl = await saveProductImage(coverFile);
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Image upload failed" };
   }
@@ -117,6 +122,11 @@ export async function saveProduct(_prev: FormState, form: FormData): Promise<For
     await prisma.productTag.create({ data: { productId, tagId: tag.id } });
   }
 
+  if (coverUrl) {
+    // The cover photo becomes the first image; existing photos move down one place.
+    await prisma.productImage.updateMany({ where: { productId }, data: { position: { increment: 1 } } });
+    await prisma.productImage.create({ data: { productId, url: coverUrl, alt: d.name, position: 0 } });
+  }
   if (urls.length) {
     const last = await prisma.productImage.aggregate({ where: { productId }, _max: { position: true } });
     const start = (last._max.position ?? -1) + 1;

@@ -59,7 +59,7 @@ export function UploadBox({ name, title, hint = "Allowed *.jpeg, *.jpg, *.png, *
         <IImagePlus className="h-7 w-7 text-[#212529]" />
       )}
       <span className="text-sm font-medium text-[#212529]">{title}</span>
-      <span className="max-w-[220px] text-xs text-[#919eab]">{hint}</span>
+      <span className="max-w-[320px] text-xs text-[#919eab]">{hint}</span>
       <input
         type="file"
         name={name}
