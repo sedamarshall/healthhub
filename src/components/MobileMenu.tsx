@@ -52,6 +52,11 @@ export function MobileMenu({ categories }: { categories: Cat[] }) {
                 ),
               )}
             </div>
+            <div className="border-t border-line p-3">
+              <Link href="/categories" onClick={() => setOpen(false)} className="flex h-11 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
+                View all categories
+              </Link>
+            </div>
           </nav>
         </div>
       )}

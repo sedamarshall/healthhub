@@ -57,3 +57,41 @@ export const SORTS: Record<string, Prisma.ProductOrderByWithRelationInput[]> = {
 export function withStockFirst(order: Prisma.ProductOrderByWithRelationInput[]) {
   return [{ stockStatus: "asc" } as Prisma.ProductOrderByWithRelationInput, ...order];
 }
+
+export type DirectoryCategory = { id: number; name: string; slug: string; parentId: number | null; topId: number; depth: number; position: number; count: number; image: string | null };
+
+/**
+ * Every active category with its product count, top-level group and a picture (the best-stocked product in it).
+ * Used by the "All Categories" page; cached and refreshed with the catalog.
+ */
+export const getCategoryDirectory = cache(
+  unstable_cache(
+    async (): Promise<DirectoryCategory[]> => {
+      const cats = await prisma.category.findMany({ where: { isActive: true }, select: { id: true, name: true, slug: true, parentId: true, position: true } });
+      const counts = await prisma.productCategory.groupBy({ by: ["categoryId"], where: { product: visible }, _count: { _all: true } });
+      const countOf = new Map(counts.map((c) => [c.categoryId, c._count._all]));
+      const byId = new Map(cats.map((c) => [c.id, c]));
+      const top = (id: number): [number, number] => {
+        let c = byId.get(id)!, depth = 0;
+        while (c.parentId && byId.has(c.parentId) && depth < 10) { c = byId.get(c.parentId)!; depth++; }
+        return [c.id, depth];
+      };
+      const withCounts = cats.filter((c) => (countOf.get(c.id) ?? 0) > 0);
+      const images = await Promise.all(
+        withCounts.map((c) =>
+          prisma.product.findFirst({
+            where: { ...visible, stockStatus: { not: "out_of_stock" }, images: { some: {} }, categories: { some: { categoryId: c.id } } },
+            orderBy: { stockQty: "desc" },
+            select: { images: { take: 1, orderBy: { position: "asc" }, select: { url: true } } },
+          }),
+        ),
+      );
+      return withCounts.map((c, i) => {
+        const [topId, depth] = top(c.id);
+        return { ...c, topId, depth, count: countOf.get(c.id) ?? 0, image: images[i]?.images[0]?.url ?? null };
+      });
+    },
+    ["category-directory"],
+    { tags: [TAGS.catalog], revalidate: 3600 },
+  ),
+);

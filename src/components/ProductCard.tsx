@@ -79,7 +79,7 @@ export function ProductCard({ p, priority }: { p: CardProduct; priority?: boolea
   const off = discountPct(p);
   const wish = { id: p.id, slug: p.slug, name: p.name, price: kes(effectivePrice(p)), image: p.images[0]?.url };
   return (
-    <div data-reveal className="group flex h-full flex-col rounded-2xl border border-line bg-white p-2.5 sm:p-4">
+    <div data-reveal className="@container group flex h-full flex-col rounded-2xl border border-line bg-white p-2.5 sm:p-4">
       <div className="relative">
         <div className="relative mb-3 w-full overflow-hidden rounded-xl bg-[#f4f3f5] pt-[100%] sm:mb-4">
           <Link href={`/p/${p.slug}`} className="absolute inset-0 z-[1] bg-[#f4f3f5] transition-transform duration-300 ease-in-out group-hover:-rotate-3 group-hover:scale-110" aria-label={p.name}>

@@ -24,7 +24,7 @@ export function AddToCartButton({
   max?: number;
   compact?: boolean;
   buyNow?: boolean;
-  /** Product cards: smaller button and the short label "Add" on phones. */
+  /** Product cards: smaller button, and the short label "Add" whenever the card is narrow (phones, 6-column grids). */
   compactMobile?: boolean;
   className?: string;
 }) {
@@ -107,7 +107,7 @@ export function AddToCartButton({
           }`}
         >
           {!disabled && <CartHi size={compact || compactMobile ? 18 : 20} />}
-          {disabled ? "Out of stock" : pending ? "Adding…" : compactMobile ? <><span className="sm:hidden">Add</span><span className="hidden sm:inline">{label}</span></> : label}
+          {disabled ? "Out of stock" : pending ? "Adding…" : compactMobile ? <><span className="@[230px]:hidden">Add</span><span className="hidden @[230px]:inline">{label}</span></> : label}
         </button>
       </div>
       {msg && (

@@ -93,6 +93,9 @@ export async function Header() {
                     </Link>
                   </li>
                 ))}
+                <li className="pt-2">
+                  <Link href="/categories" className="flex h-10 items-center justify-center rounded-full bg-brand-50 text-sm font-semibold text-brand-700 hover:bg-brand-100">View all categories</Link>
+                </li>
               </ul>
             </div>
           </div>

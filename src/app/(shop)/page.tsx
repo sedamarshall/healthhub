@@ -106,8 +106,8 @@ export default async function Home() {
       </section>
 
       <Band color="bg-lime" title="Best Selling Products" subtitle="Our customers' favourites, in stock now">
-        <ProductRail id="rail-best" products={featured} />
-        <div className="mt-8 flex justify-center"><RailArrows target="rail-best" light /></div>
+        {/* 6 across on desktop; 12 products fill whole rows at 2, 3, 4 and 6 columns */}
+        <ProductGrid products={featured.slice(0, 12)} cols="md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xl:!gap-4" />
       </Band>
 
       <section className="container-x py-8">
@@ -127,6 +127,14 @@ export default async function Home() {
               <p className="mt-3 text-center text-[15px] font-medium text-ink group-hover:text-brand-600">{c.name}</p>
             </Link>
           ))}
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Link href="/categories" className="group inline-flex h-12 items-center gap-3 rounded-full border border-line bg-white pl-6 pr-1.5 text-[15px] font-semibold text-brand-700 shadow-[0_2px_8px_rgba(145,158,171,0.16)] transition-colors hover:border-brand-600">
+            View All Categories
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-white transition-transform group-hover:rotate-45" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>
+            </span>
+          </Link>
         </div>
       </section>
 
