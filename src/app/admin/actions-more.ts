@@ -5,7 +5,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import { requireStaff, setSession } from "@/lib/auth";
+import { endAllSessions, hashPassword, requireStaff, setSession } from "@/lib/auth";
 import { notifyOrder } from "@/lib/notify";
 import { renderAny, sendRendered, verifySmtp } from "@/lib/mail";
 import { saveSettings, SETTING_DEFAULTS, type SettingKey } from "@/lib/settings";
@@ -141,9 +141,14 @@ export async function saveUser(_p: FormState, f: FormData): Promise<FormState> {
     phone,
     role: id === me.uid ? me.role : d.role,
     isActive: id === me.uid ? true : isActive,
-    ...(d.password ? { passwordHash: await bcrypt.hash(d.password, 10) } : {}),
+    ...(d.password ? { passwordHash: await hashPassword(d.password) } : {}),
   };
-  if (id) await prisma.user.update({ where: { id }, data });
+  if (id) {
+    const before = await prisma.user.findUnique({ where: { id }, select: { role: true, isActive: true } });
+    // A new password, a different role or deactivation signs that person out on every device straight away.
+    const signOut = !!d.password || before?.role !== data.role || before?.isActive !== data.isActive;
+    await prisma.user.update({ where: { id }, data: { ...data, ...(signOut ? { sessionVersion: { increment: 1 } } : {}) } });
+  }
   else await prisma.user.create({ data: { ...data, passwordHash: data.passwordHash! } });
   const back = String(f.get("back") || "/admin/users");
   redirect(back.startsWith("/admin") ? back : "/admin/users");
@@ -155,6 +160,7 @@ export async function toggleUserActive(f: FormData) {
   const u = await prisma.user.findUnique({ where: { id } });
   if (!u) return;
   await prisma.user.update({ where: { id }, data: { isActive: !u.isActive } });
+  if (u.isActive) await endAllSessions(id); // deactivated: signed out everywhere now, not when their cookie expires
   revalidatePath("/admin", "layout");
   revalidateTag("catalog");
 }
@@ -164,7 +170,7 @@ export async function deleteCustomer(f: FormData) {
   const u = await prisma.user.findUnique({ where: { id }, include: { _count: { select: { orders: true } } } });
   if (!u || u.role !== "customer") return;
   // keep accounts that have orders (order history), just deactivate them
-  if (u._count.orders > 0) await prisma.user.update({ where: { id }, data: { isActive: false } });
+  if (u._count.orders > 0) await prisma.user.update({ where: { id }, data: { isActive: false, sessionVersion: { increment: 1 } } });
   else await prisma.user.delete({ where: { id } });
   revalidatePath("/admin/customers");
 }
@@ -293,8 +299,9 @@ export async function changeMyPassword(_p: FormState, f: FormData): Promise<Form
   if (!user || !(await bcrypt.compare(current, user.passwordHash))) return { error: "Your current password is wrong" };
   if (next.length < 8) return { error: "New password must be at least 8 characters" };
   if (next !== confirm) return { error: "New passwords don't match" };
-  await prisma.user.update({ where: { id: me.uid }, data: { passwordHash: await bcrypt.hash(next, 10) } });
-  return { ok: "Password changed" };
+  await prisma.user.update({ where: { id: me.uid }, data: { passwordHash: await hashPassword(next), sessionVersion: { increment: 1 } } });
+  await setSession(me); // keep this device signed in; every other device is signed out
+  return { ok: "Password changed. Other devices have been signed out." };
 }
 
 /** The signed-in staff member edits their own name, email and phone (Profile page). */

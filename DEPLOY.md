@@ -124,6 +124,71 @@ Then finish the setup:
   ```
 - **Search engines:** if this address is only a preview before moving to healthhub.ke, keep it out of search engines until then.
 
+## 8. Security setup (do before announcing the store)
+
+### 8.1 Block direct access to private files (most important)
+
+The project folder sits inside aaPanel's web root. Nginx must never hand out the database, `.env`, backups or prescriptions directly.
+
+In aaPanel → Node.js Project → healthhub → **Modify → Config file**, add inside the `server { ... }` block, **above** the proxy `location /`:
+
+```nginx
+# Private files: never served directly (the app serves what's public itself)
+location ~ ^/(prisma|backups|storage|scripts|data|node_modules|src)(/|$) { return 404; }
+location ~ /\.(?!well-known) { return 404; }   # .env, .git, .next ...
+location ~* \.(db|db-journal|sqlite|env|log|sh|ts|md)$ { return 404; }
+```
+
+Save. Then check from any computer. Every line should show **404**:
+
+```bash
+for p in /prisma/healthhub.db /.env /backups/ /storage/prescriptions/ /.git/config /package.json; do echo "$(curl -s -o /dev/null -w '%{http_code}' https://healthhub.touchinspiration.com$p) $p"; done
+```
+
+`/package.json` may show 404 or the shop's own 404 page; both are fine. Anything showing **200** with file contents is a problem: stop and fix it.
+
+### 8.2 Only accept web traffic through Cloudflare
+
+The site reads the visitor's IP from Cloudflare (`CF-Connecting-IP`), and the rate limits depend on that. Make sure nobody can bypass Cloudflare by connecting to the server's IP directly. Run this once in the terminal. It allows ports 80/443 only from Cloudflare's published IP ranges:
+
+```bash
+apt install -y ufw
+for ip in $(curl -s https://www.cloudflare.com/ips-v4) $(curl -s https://www.cloudflare.com/ips-v6); do ufw allow from $ip to any port 80,443 proto tcp; done
+ufw allow 22/tcp          # SSH (change if you use another port)
+ufw allow 8888/tcp        # aaPanel (use your panel port; see aaPanel → Settings)
+ufw deny 80/tcp; ufw deny 443/tcp
+ufw enable
+```
+
+Notes:
+- aaPanel has its own **Security → Firewall** page that manages the same firewall. Keep the rules consistent there.
+- This also affects **Academy**, which shares the server. If Academy isn't behind Cloudflare, either put it behind Cloudflare too, or skip this step and rely on Cloudflare's own settings in 8.3.
+- Let's Encrypt renewals still work through Cloudflare.
+
+### 8.3 Cloudflare settings (dash.cloudflare.com → your domain)
+
+1. **SSL/TLS:** set **Full (strict)**, and turn on **Always Use HTTPS**.
+2. **Security → Bots:** turn on **Bot Fight Mode**.
+3. **Security → WAF → Rate limiting rules:** add a rule for paths `/login`, `/signin`, `/register`, `/checkout`, `/contact`, `/forgot-password`, `/track-order`. Allow at most **30 requests per minute per IP**, then **Block for 10 minutes**.
+4. **Turnstile** (free CAPTCHA):
+   1. Go to **Turnstile → Add site**, enter the domain, and choose widget mode **Managed**.
+   2. Put the two keys in `.env`:
+      ```env
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY="0x4AAAA..."
+      TURNSTILE_SECRET_KEY="0x4AAAA..."
+      ```
+   3. Run `bash scripts/deploy.sh`. The site key is built into the pages, so a rebuild is needed.
+   4. Restart the project.
+
+   Turnstile then protects sign-up, contact, password reset and repeated failed logins.
+
+### 8.4 Accounts and backups
+
+- **Admin password:** sign in with a strong, unique admin password (a password manager helps). Remove `DEV_ADMIN_EMAIL` / `DEV_ADMIN_PASSWORD` from the server's `.env` if they're there.
+- **2FA:** turn on two-step login for aaPanel, Cloudflare and GitHub.
+- **Off-server backups:** copy the daily backups *off* the server, e.g. with aaPanel's backup feature to Google Drive or S3. Test restoring one copy once.
+- **Monthly:** run `npm audit`, and keep Ubuntu security updates switched on.
+
 ## Updating the site later
 
 1. On your PC, push the changes:

@@ -1,15 +1,16 @@
 "use server";
 
 import { randomBytes } from "node:crypto";
-import bcrypt from "bcryptjs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { COUPON_COOKIE, getCart, getCartCoupon, linkCartToUser } from "@/lib/cart";
-import { getSession, setSession } from "@/lib/auth";
+import { getSession, hashPassword, setSession } from "@/lib/auth";
+import { sniffType } from "@/lib/uploads";
+import { offerToLinkGuestOrders } from "@/lib/link-orders";
 import { allow, clientIp } from "@/lib/ratelimit";
 import { getSettings, paymentMethods } from "@/lib/settings";
 import { evaluateCoupon } from "@/lib/coupons";
@@ -95,11 +96,16 @@ export async function placeOrder(_prev: CheckoutState, form: FormData): Promise<
     if (await prisma.user.findUnique({ where: { email: d.email.toLowerCase() } })) {
       return { error: "An account with this email already exists. Log in in Step 1, or choose Guest Checkout.", step: 1, fields };
     }
-    if (!allow(`register:${await clientIp()}`, 5, 60 * 60_000)) return { error: "Too many sign-ups from this connection. Please choose Guest Checkout.", step: 1, fields };
+    if (!(await allow(`register:${await clientIp()}`, 5, 60 * 60_000))) return { error: "Too many sign-ups from this connection. Please choose Guest Checkout.", step: 1, fields };
   }
 
   const cart = await getCart();
   if (!cart.id || !cart.items.length) return { error: "Your cart is empty", fields };
+  // Stops scripted order floods (each order emails the store and may store an 8 MB prescription).
+  const ip = await clientIp();
+  if (!(await allow(`order:${ip}`, 10, 60 * 60_000)) || !(await allow(`order:cart:${cart.id}`, 5, 60 * 60_000))) {
+    return { error: "Too many orders in a short time. Please wait a little, or call us to order.", fields };
+  }
   const bad = cart.items.find((i) => !canPurchase(i.product) || (i.product.stockStatus === "in_stock" && i.qty > i.product.stockQty));
   if (bad) return { error: `"${bad.product.name}" is no longer available in that quantity. Please update your cart.`, fields };
 
@@ -123,13 +129,15 @@ export async function placeOrder(_prev: CheckoutState, form: FormData): Promise<
   if (cart.hasRx) {
     const file = form.get("prescription");
     if (!(file instanceof File) || file.size === 0) return { error: "Please upload your prescription (photo or PDF)", step: 5, fields };
-    if (!RX_TYPES[file.type]) return { error: "Prescription must be a PDF, JPG, PNG or WEBP file", step: 5, fields };
     if (file.size > RX_MAX_BYTES) return { error: "Prescription file must be under 8 MB", step: 5, fields };
+    const buf = Buffer.from(await file.arrayBuffer());
+    const real = sniffType(buf); // check the actual bytes, not the type the browser claims
+    if (!real || !RX_TYPES[real]) return { error: "Prescription must be a PDF, JPG, PNG or WEBP file", step: 5, fields };
     const dir = join(process.cwd(), "storage", "prescriptions");
     await mkdir(dir, { recursive: true });
-    const stored = `${Date.now()}-${randomBytes(8).toString("hex")}.${RX_TYPES[file.type]}`;
-    await writeFile(join(dir, stored), Buffer.from(await file.arrayBuffer()));
-    rxFile = { path: stored, name: file.name.slice(0, 120), type: file.type };
+    const stored = `${Date.now()}-${randomBytes(8).toString("hex")}.${RX_TYPES[real]}`;
+    await writeFile(join(dir, stored), buf);
+    rxFile = { path: stored, name: file.name.slice(0, 120), type: real };
   }
 
   if (wantsAccount) {
@@ -138,12 +146,12 @@ export async function placeOrder(_prev: CheckoutState, form: FormData): Promise<
         name: `${d.firstName} ${d.lastName}`.trim(),
         email: d.email.toLowerCase(),
         phone,
-        passwordHash: await bcrypt.hash(d.password, 10),
+        passwordHash: await hashPassword(d.password),
         county: d.county, town: d.city, street: d.address1, apartment: d.address2 || null,
       },
     });
     notifyWelcome(user);
-    await prisma.order.updateMany({ where: { email: user.email, userId: null }, data: { userId: user.id } });
+    offerToLinkGuestOrders(user); // earlier guest orders join the account only after the email is confirmed
     await setSession({ uid: user.id, role: "customer", name: user.name, email: user.email });
     await linkCartToUser(user.id);
     session = { uid: user.id, role: "customer", name: user.name, email: user.email };
@@ -161,7 +169,9 @@ export async function placeOrder(_prev: CheckoutState, form: FormData): Promise<
   let number = orderNumber();
   while (await prisma.order.findUnique({ where: { number } })) number = orderNumber();
 
-  const created = await prisma.$transaction(async (tx) => {
+  let created;
+  try {
+  created = await prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
       data: {
         number,
@@ -193,6 +203,11 @@ export async function placeOrder(_prev: CheckoutState, form: FormData): Promise<
     await tx.cartItem.deleteMany({ where: { cartId: cart.id! } });
     return order;
   });
+  } catch (e) {
+    // Don't leave an orphaned prescription file behind if the order couldn't be saved.
+    if (rxFile) await unlink(join(process.cwd(), "storage", "prescriptions", rxFile.path)).catch(() => {});
+    throw e;
+  }
   notifyOrder(created.id, cart.hasRx ? "rx_pending" : "placed");
   if (session && !wantsAccount) {
     // remember the billing address for next time

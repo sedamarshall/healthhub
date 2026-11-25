@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { requestReset, resetPassword, type ResetState } from "@/app/actions/password";
 import { Field } from "./Field";
+import { Turnstile } from "./Turnstile";
 
 const btn = "flex h-12 w-full items-center justify-center rounded-full bg-brand-600 text-[15px] font-semibold text-white shadow-[0_6px_15px_rgba(161,15,228,0.16)] hover:bg-brand-700 disabled:opacity-60";
 
@@ -14,7 +15,8 @@ export function ForgotForm() {
     <form action={action} className="space-y-4">
       <p className="text-muted">Enter the email you use for your account and we&apos;ll send you a link to choose a new password.</p>
       <Field label="Email" name="email" type="email" required autoComplete="email" />
-      {s.error && <p className="text-sm text-sale">{s.error}</p>}
+      <Turnstile resetKey={s} />
+      {s.error && <p className="text-sm text-sale" role="alert">{s.error}</p>}
       <button disabled={pending} className={btn}>{pending ? "Sending…" : "Send reset link"}</button>
       <p className="text-center text-[15px] text-muted"><Link href="/login" className="font-semibold text-brand-600">Back to login</Link></p>
     </form>

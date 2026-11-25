@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { login, register, type AuthState } from "@/app/actions/auth";
 import { Field } from "./Field";
+import { Turnstile } from "@/components/Turnstile";
 
 const btn = "flex h-12 w-full items-center justify-center rounded-full bg-brand-600 text-[15px] font-semibold text-white shadow-[0_6px_16px_rgba(161,15,228,0.25)] hover:bg-brand-700 disabled:opacity-60";
 
@@ -15,6 +16,7 @@ export function LoginForm({ next, onSwitch }: { next?: string; onSwitch?: () => 
       <Field label="Email" name="email" type="email" required autoComplete="email" defaultValue={state.email} />
       <Field label="Password" name="password" type="password" required autoComplete="current-password" />
       <div className="text-right"><Link href="/forgot-password" className="text-sm font-semibold text-brand-600">Forgot password?</Link></div>
+      {state.captcha && <Turnstile resetKey={state} />}
       {state.error && <p className="text-sm text-sale" role="alert">{state.error}</p>}
       <button className={btn} disabled={pending}>{pending ? "Signing in…" : "Login"}</button>
       <p className="text-center text-[15px] text-muted">
@@ -34,6 +36,7 @@ export function RegisterForm({ next, onSwitch }: { next?: string; onSwitch?: () 
       <Field label="Email" name="email" type="email" required autoComplete="email" defaultValue={state.email} />
       <Field label="Phone number" name="phone" type="tel" inputMode="tel" required autoComplete="tel" defaultValue={state.phone} />
       <Field label="Password (8+ characters)" name="password" type="password" minLength={8} required autoComplete="new-password" />
+      <Turnstile resetKey={state} />
       {state.error && <p className="text-sm text-sale" role="alert">{state.error}</p>}
       <button className={btn} disabled={pending}>{pending ? "Creating account…" : "Create Account"}</button>
       <p className="text-center text-[15px] text-muted">

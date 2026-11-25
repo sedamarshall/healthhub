@@ -33,8 +33,11 @@ export async function GET(req: NextRequest) {
   const raw = { query: Object.fromEntries(q), ipn: status };
   const amount = Number(q.get("mc"));
   const receipt = q.get("txncd");
-  if (status === IPAY.status.success || status === IPAY.status.more) {
-    await markPaymentPaid(reference, { amount: Number.isFinite(amount) && amount > 0 ? amount : null, receipt, message: `Paid via iPay${q.get("channel") ? ` (${q.get("channel")})` : ""}`, raw });
+  if ((status === IPAY.status.success || status === IPAY.status.more) && !(Number.isFinite(amount) && amount > 0)) {
+    // iPay says paid but didn't tell us how much: don't guess. Staff check the iPay dashboard and use "Mark as paid".
+    await prisma.payment.update({ where: { id: payment.id }, data: { message: "iPay reported success without an amount. Check the iPay dashboard before marking paid.", raw: JSON.stringify(raw) } });
+  } else if (status === IPAY.status.success || status === IPAY.status.more) {
+    await markPaymentPaid(reference, { amount, receipt, message: `Paid via iPay${q.get("channel") ? ` (${q.get("channel")})` : ""}`, raw });
   } else if (status === IPAY.status.pending) {
     await prisma.payment.update({ where: { id: payment.id }, data: { message: "iPay: payment pending", raw: JSON.stringify(raw) } });
   } else {

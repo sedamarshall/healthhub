@@ -108,6 +108,7 @@ model User {
   addressType   String?
   notificationsSeenAt DateTime? // staff: when the order notifications were last read
   avatar        String? // profile picture (/uploads/...)
+  sessionVersion Int          @default(0) // bumped to sign the user out everywhere (password change, deactivation, role change)
   createdAt     DateTime       @default(now())
   reviews       Review[]
   carts         Cart[]
@@ -388,4 +389,13 @@ model HomeBlock {
   endsAt    DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+/** Rate-limit hits (login, sign-up, contact, checkout...). Kept in the database so limits survive restarts. */
+model RateHit {
+  id  Int      @id @default(autoincrement())
+  key String
+  at  DateTime @default(now())
+
+  @@index([key, at])
 }

@@ -24,16 +24,24 @@ export async function markPaymentPaid(reference: string, info: { receipt?: strin
     // A paid order goes straight to Processing (ready to be packed).
     await tx.order.update({ where: { id: order.id }, data: { paymentStatus: "paid", status: "processing", paidAt: new Date() } });
     if (order.couponCode) await tx.coupon.updateMany({ where: { code: order.couponCode }, data: { used: { increment: 1 } } });
+    const short: string[] = [];
     for (const item of order.items) {
       if (!item.productId) continue;
       const product = await tx.product.findUnique({ where: { id: item.productId } });
       if (!product) continue;
+      // Two customers can pay for the last unit at the same time: the payment still counts, but flag the order.
+      if (product.stockStatus === "in_stock" && product.stockQty < item.qty) short.push(`${product.name} (needed ${item.qty}, had ${product.stockQty})`);
       const newQty = Math.max(0, product.stockQty - item.qty);
       await tx.product.update({
         where: { id: product.id },
         data: { stockQty: newQty, ...(product.stockStatus === "in_stock" && newQty === 0 ? { stockStatus: "out_of_stock" } : {}) },
       });
       await tx.stockMovement.create({ data: { productId: product.id, delta: -item.qty, reason: "sale", orderId: order.id } });
+    }
+    if (short.length) {
+      const note = `⚠ Not enough stock when paid: ${short.join("; ")}. Restock or contact the customer.`;
+      await tx.order.update({ where: { id: order.id }, data: { notes: order.notes ? `${order.notes}
+${note}` : note } });
     }
     return { ok: true, orderId: order.id };
   });

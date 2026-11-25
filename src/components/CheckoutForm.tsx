@@ -6,6 +6,7 @@ import Link from "next/link";
 import { placeOrder, type CheckoutState } from "@/app/actions/checkout";
 import { login, type AuthState } from "@/app/actions/auth";
 import { Field, FieldArea, FieldSelect } from "./Field";
+import { Turnstile } from "@/components/Turnstile";
 
 type Zone = { id: string; group: string; title: string; note: string; fee: number; freeOver: boolean; needsAddress: boolean };
 type Line = { id: number; name: string; qty: number; unit: string; was?: string; image?: string; rx: boolean };
@@ -80,6 +81,7 @@ function LoginBox() {
         <Link href="/forgot-password" className="text-sm font-semibold text-brand-600">Forgotten Password</Link>
         <button disabled={pending} className={primaryBtn}>{pending ? "Signing in…" : "Login"}</button>
       </div>
+      {state.captcha && <Turnstile resetKey={state} />}
       {state.error && <p className="text-sm text-sale" role="alert">{state.error}</p>}
     </form>
   );

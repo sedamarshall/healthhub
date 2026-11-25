@@ -35,9 +35,9 @@ const Svg = ({ d, className = "h-5 w-5" }: { d: string; className?: string }) =>
   <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 );
 
-export default async function AccountPage({ searchParams }: { searchParams: Promise<{ tab?: string; f?: string }> }) {
+export default async function AccountPage({ searchParams }: { searchParams: Promise<{ tab?: string; f?: string; linked?: string }> }) {
   const session = await getSession();
-  const { tab: t, f } = await searchParams;
+  const { tab: t, f, linked } = await searchParams;
   if (!session) redirect(`/login?next=${encodeURIComponent(t ? `/account?tab=${t}` : "/account")}`);
   const tab = TABS.some((x) => x.key === t) ? t! : "dashboard";
   const [user, orders] = await Promise.all([
@@ -121,6 +121,11 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   return (
     <div className="container-x py-4 sm:py-6">
       <div className="hidden sm:block"><Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "My Account", href: "/account" }, ...(tab !== "dashboard" ? [{ name: current.label }] : [])]} /></div>
+      {linked !== undefined && (
+        <p role="status" className={`mb-4 rounded-2xl px-4 py-3 text-sm ${linked === "invalid" ? "bg-[rgba(255,72,66,0.08)] text-sale" : "bg-brand-50 text-brand-700"}`}>
+          {linked === "invalid" ? "That link has expired or isn't valid any more. Contact us if you need help finding an order." : Number(linked) > 0 ? `Done: ${linked} earlier order${linked === "1" ? " was" : "s were"} added to your account.` : "Your earlier orders are already in your account."}
+        </p>
+      )}
 
       {/* Phones: profile header + scrollable tabs instead of the long sidebar */}
       <div className="mb-5 lg:hidden">

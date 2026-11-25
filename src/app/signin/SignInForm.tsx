@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import Link from "next/link";
 import { login, type AuthState } from "@/app/actions/auth";
+import { Turnstile } from "@/components/Turnstile";
 
 const input = "peer block h-14 w-full appearance-none rounded-full border border-[rgba(145,158,171,0.2)] bg-transparent px-3.5 py-4 text-sm text-ink focus:border-brand-600 focus:outline-none";
 const label = "pointer-events-none absolute left-3.5 top-2 z-10 origin-left -translate-y-4 scale-75 bg-white px-1 text-sm text-brand-600 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-faint peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:bg-white peer-focus:text-brand-600";
@@ -38,6 +39,7 @@ export function SignInForm({ next }: { next: string }) {
         </label>
         <Link href="/forgot-password" className="text-[13px] font-bold text-brand-600 hover:text-brand-700">Forgot password?</Link>
       </div>
+      {state.captcha && <Turnstile resetKey={state} />}
       {state.error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-sale" role="alert">{state.error}</p>}
       <button disabled={pending} className="inline-flex h-12 w-full items-center justify-center rounded-full bg-brand-600 text-[15px] font-bold text-white shadow-[0_8px_16px_rgba(161,15,228,0.24)] transition-colors hover:bg-brand-700 disabled:opacity-60">
         {pending ? "Signing in…" : "Sign In"}

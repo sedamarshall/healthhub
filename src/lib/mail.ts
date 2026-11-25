@@ -209,7 +209,7 @@ function staffTemplate(kind: "new_order" | "payment_received", o: OrderLike) {
 
 // ---------------------------------------------------------------- account & contact
 
-type AccountKind = "welcome" | "password_reset" | "contact_ack" | "contact_staff";
+type AccountKind = "welcome" | "password_reset" | "link_orders" | "contact_ack" | "contact_staff";
 function accountTemplate(kind: AccountKind, d: { name: string; link?: string; email?: string; phone?: string; subject?: string; body?: string }) {
   const first = esc(d.name.split(" ")[0]);
   switch (kind) {
@@ -217,8 +217,11 @@ function accountTemplate(kind: AccountKind, d: { name: string; link?: string; em
       return { subject: "Welcome to Health Hub Chemist", title: `Welcome, ${first}!`, pre: "Your account is ready.", body: P("Thanks for creating an account. You can now track your orders, save your address for faster checkout and keep a wishlist.") + button(`${STORE.appUrl}/account`, "Go to my account") + P("Need advice on a medicine? Our pharmacists are a call or WhatsApp away.") };
     case "password_reset":
       return { subject: "Reset your Health Hub password", title: "Reset your password", pre: "This link works for 1 hour.", body: P(`Hi ${first}, we received a request to reset your password. This link works for 1 hour.`) + button(d.link ?? STORE.appUrl, "Choose a new password") + P("If you didn't ask for this, you can ignore this email. Your password won't change.") };
+    case "link_orders":
+      return { subject: "Add your earlier orders to your account", title: "We found your earlier orders", pre: "Confirm it's you to see them in your account.", body: P(`Hi ${first}, we found orders placed with this email address before you created your account.`) + P("To keep your details private, we only add them to your account once you confirm this email is yours. The link works for 7 days.") + button(d.link ?? STORE.appUrl, "Add them to my account") + P("If you didn't create an account with us, you can ignore this email.") };
     case "contact_ack":
-      return { subject: "We've received your message", title: "Thanks for getting in touch", pre: "We'll reply as soon as we can.", body: P(`Hi ${first}, we've received your message and a member of our team will reply as soon as we can, usually within one working day.`) + (d.body ? P(`<span style="color:#637381">Your message:</span><br>${esc(d.body).replace(/\n/g, "<br>")}`) : "") + P("For anything urgent, call or WhatsApp us.") };
+      // Deliberately doesn't repeat the message: otherwise anyone could use the form to send their text from our mail server.
+      return { subject: "We've received your message", title: "Thanks for getting in touch", pre: "We'll reply as soon as we can.", body: P(`Hi ${first}, we've received your message and a member of our team will reply as soon as we can, usually within one working day.`) + P("For anything urgent, call or WhatsApp us.") };
     case "contact_staff":
       return { subject: `[Website] ${d.subject || `Message from ${d.name}`}`, title: "New message from the website", pre: `${d.name} sent a message.`, body: P(`<b>${esc(d.name)}</b> (${esc(d.email ?? "")}${d.phone ? `, ${esc(d.phone)}` : ""}) wrote:`) + P(esc(d.body ?? "").replace(/\n/g, "<br>")) + button(`${STORE.appUrl}/admin/messages`, "Open inbox") };
   }
@@ -284,6 +287,7 @@ export const EMAIL_CATALOGUE: { key: string; group: "Customer: orders" | "Custom
   { key: "refunded", group: "Customer: orders", label: "Refund sent", when: "You mark a refund as Refunded" },
   { key: "welcome", group: "Customer: account", label: "Welcome", when: "Someone creates an account" },
   { key: "password_reset", group: "Customer: account", label: "Password reset", when: "Someone asks to reset their password" },
+  { key: "link_orders", group: "Customer: account", label: "Confirm earlier orders", when: "A new account's email has earlier guest orders" },
   { key: "contact_ack", group: "Customer: account", label: "Message received", when: "Someone uses the contact form" },
   { key: "new_order", group: "Store owner", label: "New order alert", when: "Any order is placed (sent to your store email)" },
   { key: "payment_received", group: "Store owner", label: "Order paid alert", when: "An order is paid (sent to your store email)" },
@@ -308,7 +312,7 @@ export async function renderAny(key: string): Promise<Rendered | null> {
   }
   if (key === "new_order") return renderStaffEmail("new_order", o);
   if (key === "payment_received") return renderStaffEmail("payment_received", { ...o, status: "processing", paymentStatus: "paid" });
-  if (key === "welcome" || key === "password_reset" || key === "contact_ack" || key === "contact_staff")
+  if (key === "welcome" || key === "password_reset" || key === "link_orders" || key === "contact_ack" || key === "contact_staff")
     return renderAccountEmail(key, { name: o.name, email: o.email, phone: "0712 345 678", link: `${STORE.appUrl}/reset-password?token=preview`, subject: "Do you have Panadol Extra?", body: "Hi, do you have Panadol Extra in stock? I'd like 3 packs delivered to Westlands." });
   return null;
 }

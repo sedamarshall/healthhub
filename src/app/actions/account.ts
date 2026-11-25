@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import { getSession, setSession } from "@/lib/auth";
+import { getSession, hashPassword, setSession } from "@/lib/auth";
 import { normalizeKenyanPhone } from "@/lib/utils";
 import { ADDRESS_TYPES } from "@/lib/config";
 
@@ -50,6 +50,8 @@ export async function changePassword(_p: AccountState, f: FormData): Promise<Acc
   if (!u || !(await bcrypt.compare(current, u.passwordHash))) return { error: "Your current password is wrong" };
   if (next.length < 8) return { error: "New password must be at least 8 characters" };
   if (next !== confirm) return { error: "New passwords don't match" };
-  await prisma.user.update({ where: { id: s.uid }, data: { passwordHash: await bcrypt.hash(next, 10) } });
-  return { ok: "Password changed" };
+  // Sign out every other device, then give this one a fresh session.
+  await prisma.user.update({ where: { id: s.uid }, data: { passwordHash: await hashPassword(next), sessionVersion: { increment: 1 } } });
+  await setSession(s);
+  return { ok: "Password changed. Other devices have been signed out." };
 }

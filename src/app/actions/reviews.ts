@@ -5,6 +5,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { refreshRating } from "@/lib/reviews";
+import { allow, clientIp } from "@/lib/ratelimit";
 
 export type ReviewState = { error?: string; ok?: string };
 
@@ -24,6 +25,7 @@ export async function submitReview(_p: ReviewState, f: FormData): Promise<Review
   const parsed = schema.safeParse(Object.fromEntries(f.entries()));
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const d = parsed.data;
+  if (!(await allow(`review:${await clientIp()}`, 5, 60 * 60_000))) return { error: "Too many reviews from this connection. Please try again later." };
   const s = await getSession();
   const product = await prisma.product.findUnique({ where: { id: d.productId }, select: { id: true, slug: true } });
   if (!product) return { error: "Product not found" };

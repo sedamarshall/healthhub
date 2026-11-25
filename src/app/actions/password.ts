@@ -1,11 +1,12 @@
 "use server";
 
 import { createHash, randomBytes } from "node:crypto";
-import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { sendAccountEmail } from "@/lib/mail";
 import { STORE } from "@/lib/config";
 import { allow, clientIp } from "@/lib/ratelimit";
+import { hashPassword } from "@/lib/auth";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 export type ResetState = { error?: string; ok?: string };
 const hash = (t: string) => createHash("sha256").update(t).digest("hex");
@@ -14,7 +15,9 @@ const hash = (t: string) => createHash("sha256").update(t).digest("hex");
 export async function requestReset(_p: ResetState, f: FormData): Promise<ResetState> {
   const email = String(f.get("email") ?? "").trim().toLowerCase();
   if (!/^\S+@\S+\.\S+$/.test(email)) return { error: "Enter a valid email address" };
-  if (!allow(`reset:${await clientIp()}`, 5, 60 * 60_000)) return { error: "Too many requests. Please try again later." };
+  const ip = await clientIp();
+  if (!(await verifyTurnstile(f, ip))) return { error: "Please complete the security check and try again." };
+  if (!(await allow(`reset:${ip}`, 5, 60 * 60_000))) return { error: "Too many requests. Please try again later." };
   const user = await prisma.user.findUnique({ where: { email } });
   if (user && user.isActive) {
     const recent = await prisma.passwordReset.count({ where: { userId: user.id, createdAt: { gte: new Date(Date.now() - 15 * 60_000) } } });
@@ -38,7 +41,8 @@ export async function resetPassword(_p: ResetState, f: FormData): Promise<ResetS
   const row = await prisma.passwordReset.findUnique({ where: { tokenHash: hash(token) } });
   if (!row || row.usedAt || row.expiresAt < new Date()) return { error: "This reset link is invalid or has expired. Please request a new one." };
   await prisma.$transaction([
-    prisma.user.update({ where: { id: row.userId }, data: { passwordHash: await bcrypt.hash(pw, 10) } }),
+    // New password + sign out every device (whoever had the old password loses access).
+    prisma.user.update({ where: { id: row.userId }, data: { passwordHash: await hashPassword(pw), sessionVersion: { increment: 1 } } }),
     prisma.passwordReset.update({ where: { id: row.id }, data: { usedAt: new Date() } }),
   ]);
   return { ok: "Your password has been changed. You can now log in." };
