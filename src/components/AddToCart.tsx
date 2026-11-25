@@ -66,14 +66,14 @@ export function AddToCartButton({
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14" /></svg>
             </button>
           </div>
-          <button type="button" onClick={() => add(true)} disabled={disabled || pending} className="h-12 flex-1 rounded-[80px] bg-accent px-[22px] text-base font-semibold leading-[26px] text-[#212b36] transition-colors hover:bg-[#17a690] disabled:cursor-not-allowed disabled:opacity-50">
+          <button type="button" onClick={() => add(true)} disabled={disabled || pending} className="h-12 flex-1 whitespace-nowrap rounded-[80px] bg-accent px-5 text-base font-semibold leading-[26px] text-[#212b36] transition-colors hover:bg-[#17a690] disabled:cursor-not-allowed disabled:opacity-50">
             Buy Now
           </button>
           <button
             type="button"
             onClick={() => add()}
             disabled={disabled || pending}
-            className={`flex h-12 w-full items-center justify-center gap-2 rounded-[80px] px-[22px] text-base font-semibold leading-[26px] transition-colors md:w-auto md:flex-1 ${disabled ? "cursor-not-allowed bg-well text-faint" : "bg-brand-600 text-white shadow-[0_6px_15px_rgba(161,15,228,0.16)] hover:bg-brand-700"}`}
+            className={`flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-[80px] px-5 text-base font-semibold leading-[26px] transition-colors md:w-auto md:flex-1 ${disabled ? "cursor-not-allowed bg-well text-faint" : "bg-brand-600 text-white shadow-[0_6px_15px_rgba(161,15,228,0.16)] hover:bg-brand-700"}`}
           >
             {!disabled && <CartHi size={20} />}
             {disabled ? "Out of stock" : pending ? "Adding…" : "Add to Cart"}

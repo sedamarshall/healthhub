@@ -7,6 +7,7 @@ import { WishlistButton } from "./Wishlist";
 import { RailArrows } from "./RailArrows";
 import { ViewHi } from "./Hi";
 import { ChevronLeft, ChevronRight } from "./Icons";
+import { QuickViewButton } from "./QuickView";
 
 export { ChevronLeft, ChevronRight };
 
@@ -88,6 +89,9 @@ export function ProductCard({ p, priority }: { p: CardProduct; priority?: boolea
           {p.rxClass === "pom" && <span className="absolute bottom-2 left-2 z-20 rounded bg-white px-1.5 text-xs font-semibold leading-[22px] text-ink">Rx</span>}
           {/* Phones have no hover, so the wishlist heart sits on the image instead of in the bottom row */}
           <WishlistButton item={wish} iconSize={18} className="absolute right-1.5 top-1.5 z-20 !h-8 !w-8 !border-0 !bg-white/90 text-muted shadow-sm sm:!hidden" />
+          <QuickViewButton slug={p.slug} name={p.name} className="absolute right-1.5 top-11 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-muted shadow-sm sm:hidden">
+            <ViewHi size={18} />
+          </QuickViewButton>
         </div>
         {off > 0 && <DiscountBadge pct={off} />}
         {/* Hover actions (wishlist + quick view) slide up over the image */}
@@ -95,9 +99,9 @@ export function ProductCard({ p, priority }: { p: CardProduct; priority?: boolea
           <ul className="flex items-center gap-x-px">
             <li><WishlistButton item={wish} iconSize={24} className="!h-11 !w-11 !rounded-none !rounded-l-sm !border-0 !bg-white text-muted hover:text-brand-600" /></li>
             <li>
-              <Link href={`/p/${p.slug}`} aria-label="Quick view" title="Quick view" className="flex h-11 w-11 items-center justify-center rounded-r-sm bg-white text-ink hover:text-brand-600">
+              <QuickViewButton slug={p.slug} name={p.name} className="flex h-11 w-11 items-center justify-center rounded-r-sm bg-white text-ink hover:text-brand-600">
                 <ViewHi size={24} />
-              </Link>
+              </QuickViewButton>
             </li>
           </ul>
         </div>
