@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
-import { cardInclude, searchWhere, SORTS, visible, withStockFirst } from "@/lib/catalog";
+import { cardInclude, searchScore, searchWhere, SORTS, visible, withStockFirst } from "@/lib/catalog";
+import { canPurchase } from "@/lib/utils";
 import { ProductGrid } from "@/components/ProductCard";
 import { Breadcrumbs, Pagination, SortBar } from "@/components/Listing";
 import { SearchBox } from "@/components/SearchBox";
@@ -18,11 +19,25 @@ export default async function SearchPage({ searchParams }: Props) {
   const sp = await searchParams;
   const q = (sp.q ?? "").slice(0, 80);
   const page = Math.max(1, Number(sp.page) || 1);
-  const where = { ...(q ? searchWhere(q) : visible), ...listingFilters(sp) };
-  const [total, products] = await Promise.all([
-    prisma.product.count({ where }),
-    prisma.product.findMany({ where, include: cardInclude, orderBy: withStockFirst(SORTS[sp.sort ?? "popular"] ?? SORTS.popular), skip: (page - 1) * PER_PAGE, take: PER_PAGE }),
-  ]);
+  let where = { ...(q ? searchWhere(q) : visible), ...listingFilters(sp) };
+  // Nothing by name/brand? Try category names too ("baby food" finds the Baby & Mum range).
+  if (q && !(await prisma.product.count({ where }))) where = { ...searchWhere(q, { categories: true }), ...listingFilters(sp) };
+  let total: number;
+  let products: Awaited<ReturnType<typeof prisma.product.findMany<{ include: typeof cardInclude }>>>;
+  if (q && !sp.sort) {
+    // Search with the default sort: best matches first (same ranking as the search window).
+    const all = await prisma.product.findMany({ where, select: { id: true, name: true, brand: true, featured: true, status: true, stockStatus: true, stockQty: true, price: true }, take: 2000 });
+    const ranked = all.map((p) => ({ id: p.id, s: searchScore(p, q) + (canPurchase(p) ? 25 : 0) + (p.featured ? 3 : 0) })).sort((a, b) => b.s - a.s);
+    total = ranked.length;
+    const ids = ranked.slice((page - 1) * PER_PAGE, page * PER_PAGE).map((r) => r.id);
+    const rows = await prisma.product.findMany({ where: { id: { in: ids } }, include: cardInclude });
+    products = ids.map((id) => rows.find((r) => r.id === id)!).filter(Boolean);
+  } else {
+    [total, products] = await Promise.all([
+      prisma.product.count({ where }),
+      prisma.product.findMany({ where, include: cardInclude, orderBy: withStockFirst(SORTS[sp.sort ?? "popular"] ?? SORTS.popular), skip: (page - 1) * PER_PAGE, take: PER_PAGE }),
+    ]);
+  }
   const params = { q: q || undefined, sort: sp.sort, instock: sp.instock, minp: sp.minp, maxp: sp.maxp };
 
   return (

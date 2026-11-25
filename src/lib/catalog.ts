@@ -35,15 +35,48 @@ export function reviveProducts<T extends { createdAt: Date | string; updatedAt: 
   return list.map((p) => ({ ...p, createdAt: d(p.createdAt)!, updatedAt: d(p.updatedAt)!, saleStartsAt: d(p.saleStartsAt), saleEndsAt: d(p.saleEndsAt) }));
 }
 
-export function searchWhere(q: string): Prisma.ProductWhereInput {
-  const terms = q.trim().split(/\s+/).filter(Boolean).slice(0, 6);
+/**
+ * Product search filter. Every word must match the name, brand or SKU (or the old OpenCart code).
+ * Single letters are ignored when there are longer words ("vitamin c" filters on "vitamin"; ranking then
+ * puts "Vitamin C" names first). With { categories: true } a word may also match a category name: used
+ * only as a fallback when nothing matches by name, because it is very broad ("vitamin" = 1,200+ products).
+ */
+export function searchWhere(q: string, opts: { categories?: boolean } = {}): Prisma.ProductWhereInput {
+  const all = q.trim().split(/\s+/).filter(Boolean).slice(0, 6);
+  const long = all.filter((t) => t.length >= 2);
+  const terms = long.length ? long : all;
   return {
     ...visible,
     AND: terms.map((t) => ({
-      OR: [{ name: { contains: t } }, { brand: { contains: t } }, { sku: { contains: t } }, { legacyCode: { equals: t } }],
+      OR: [
+        { name: { contains: t } },
+        { brand: { contains: t } },
+        { sku: { contains: t } },
+        { legacyCode: { equals: t } },
+        ...(opts.categories ? [{ categories: { some: { category: { name: { contains: t } } } } }] : []),
+      ],
     })),
   };
 }
+
+/** Relevance score for ranking search results (higher = better match). */
+export function searchScore(p: { name: string; brand: string | null }, q: string): number {
+  const name = p.name.toLowerCase();
+  const query = q.trim().toLowerCase().replace(/\s+/g, " ");
+  const words = query.split(" ").filter(Boolean);
+  let score = 0;
+  if (name === query) score += 200;
+  if (name.startsWith(query)) score += 80;
+  if (name.includes(query)) score += 60; // the whole phrase, e.g. "vitamin c"
+  const nameWords = new Set(name.split(/[^a-z0-9]+/).filter(Boolean));
+  for (const w of words) {
+    if (nameWords.has(w)) score += 15; // whole word ("c" in "Vitamin C", not the c in "Cetaphil")
+    else if (name.includes(w)) score += 5;
+    if (p.brand?.toLowerCase().includes(w)) score += 8;
+  }
+  return score - name.length / 100; // shorter (more specific) names win ties
+}
+
 
 export const SORTS: Record<string, Prisma.ProductOrderByWithRelationInput[]> = {
   popular: [{ featured: "desc" }, { stockQty: "desc" }],
